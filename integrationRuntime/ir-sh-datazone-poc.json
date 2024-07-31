@@ -1,0 +1,6 @@
+{
+	"name": "ir-sh-datazone-poc",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
