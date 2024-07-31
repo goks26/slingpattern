@@ -1,0 +1,2 @@
+# slingpattern
+Data ingestion pattern
