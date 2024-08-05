@@ -1,5 +1,5 @@
 {
-	"name": "PL_CH_DML_INSERT_PolarisAudit",
+	"name": "PL_CH_DML_INSERT_SLIPAudit",
 	"properties": {
 		"description": "Enable Audit Trace",
 		"activities": [
@@ -16,10 +16,6 @@
 					"secureInput": false
 				},
 				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "ls_snowflake",
-					"type": "LinkedServiceReference"
-				},
 				"typeProperties": {
 					"scripts": [
 						{
@@ -189,7 +185,7 @@
 			}
 		},
 		"folder": {
-			"name": "PL_PolarisDW/DWMetaDataEngine"
+			"name": "PL_SLPATTERN/SLIPMetaDataEngine"
 		},
 		"annotations": []
 	}
