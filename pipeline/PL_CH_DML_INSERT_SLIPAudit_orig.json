@@ -1,5 +1,5 @@
 {
-	"name": "PL_CH_DML_INSERT_SLIPAudit",
+	"name": "PL_CH_DML_INSERT_SLIPAudit_orig",
 	"properties": {
 		"description": "Enable Audit Trace",
 		"activities": [
@@ -16,10 +16,6 @@
 					"secureInput": false
 				},
 				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "ls_sql",
-					"type": "LinkedServiceReference"
-				},
 				"typeProperties": {
 					"scripts": [
 						{
@@ -150,23 +146,6 @@
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
-				}
-			},
-			{
-				"name": "Stored procedure1",
-				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "ls_sql",
-					"type": "LinkedServiceReference"
 				}
 			}
 		],
