@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sql-server-spring-polaris-uat-uksouth.database.windows.net;Initial Catalog=sql-db-spring-polaris-uat-uksouth"
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sqlserv-slingpattern-poc.database.windows.net;Initial Catalog=sqldb-slingpattern-poc"
 		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
