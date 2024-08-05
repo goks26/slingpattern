@@ -185,7 +185,7 @@
 			}
 		},
 		"folder": {
-			"name": "PL_SLPATTERN/SLIPMetaDataEngine"
+			"name": "PL_SLIngestionPattern/SLIPMetaDataEngine"
 		},
 		"annotations": []
 	}

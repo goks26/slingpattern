@@ -1,12 +1,12 @@
 {
-	"name": "DS_PolarisAzureSQLDB",
+	"name": "DS_SLIPAzureSQLDB",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_sql",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "DS_PolarisDW"
+			"name": "DS_SLIngestionPattern"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
