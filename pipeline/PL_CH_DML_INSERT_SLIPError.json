@@ -41,6 +41,53 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[MetaDataEngine].[udp_SLIngestionPattern_ErrorLog]",
+					"storedProcedureParameters": {
+						"Para_ErrorMessage": {
+							"value": {
+								"value": "@variables('vErrorMsg')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_ErrorProgramUnitName": {
+							"value": {
+								"value": "@pipeline().parameters.Para_ErrorProgramUnitName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_ErrorSeverity": {
+							"value": {
+								"value": "@pipeline().parameters.Para_ErrorSeverity",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_JobStage": {
+							"value": {
+								"value": "@pipeline().parameters.Para_JobStage",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_PipelineRunId": {
+							"value": {
+								"value": "@pipeline().parameters.Para_PipelineRunId",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"ParaTargetEnv": {
+							"value": {
+								"value": "@pipeline().globalParameters.vGlobalEnv",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
 				"linkedServiceName": {
 					"referenceName": "ls_sql",
 					"type": "LinkedServiceReference"
