@@ -4,7 +4,8 @@
 		"description": "Enable Audit Trace",
 		"activities": [
 			{
-				"name": "AC_SP",
+				"name": "AC_SP_SLIP_AuditTrace",
+				"description": "Capture the trace related to data movements and pipeline job status.",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [],
 				"policy": {

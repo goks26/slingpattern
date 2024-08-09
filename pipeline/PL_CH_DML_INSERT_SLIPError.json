@@ -4,9 +4,27 @@
 		"description": "Capture error Trace ",
 		"activities": [
 			{
-				"name": "AC_SP_udp_PolarisDW_ErrorLog",
-				"description": "Capture the Error",
-				"type": "Script",
+				"name": "SV_RemoveSpecial",
+				"description": "Remove Special characters if any in the error message",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vErrorMsg",
+					"value": {
+						"value": "@replace(pipeline().parameters.Para_ErrorMessage,'''','-')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "AC_SP_SLIP_ErrorLog",
+				"description": "Log SL ingestion error details and related informations.",
+				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
 						"activity": "SV_RemoveSpecial",
@@ -23,100 +41,9 @@
 					"secureInput": false
 				},
 				"userProperties": [],
-				"typeProperties": {
-					"scripts": [
-						{
-							"parameters": [
-								{
-									"name": "Para_PipelineRunId ",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_PipelineRunId",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_JobStage",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_JobStage",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_ErrorSeverity",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_ErrorSeverity",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_ErrorProgramUnitName",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_ErrorProgramUnitName",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_ErrorMessage",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_ErrorMessage",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "ParaTargetEnv",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().globalParameters.vGlobalEnv\n",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "ParaMetaSchema",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().globalParameters.vGlobalMetaEngine",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								}
-							],
-							"type": "Query",
-							"text": {
-								"value": "@concat('CALL ',pipeline().globalParameters.vGlobalEnv,'_',pipeline().globalParameters.vGlobalMetaEngine,'.udp_PolarisDW_ErrorLog(',\n'''',\npipeline().parameters.Para_PipelineRunId,\n''',',\n'''',\npipeline().parameters.Para_JobStage,\n''',',\n'''',\npipeline().parameters.Para_ErrorSeverity,\n''',',\n'''',\npipeline().parameters.Para_ErrorProgramUnitName,\n''',',\n'''',\nvariables('vErrorMsg'),\n''',',\n'''',\npipeline().globalParameters.vGlobalEnv,\n''',',\n'''',\npipeline().globalParameters.vGlobalMetaEngine,\n'''',\n');')",
-								"type": "Expression"
-							}
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
-			},
-			{
-				"name": "SV_RemoveSpecial",
-				"description": "Remove Special characters if any in the error message",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "vErrorMsg",
-					"value": {
-						"value": "@replace(pipeline().parameters.Para_ErrorMessage,'''','-')",
-						"type": "Expression"
-					}
+				"linkedServiceName": {
+					"referenceName": "ls_sql",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
