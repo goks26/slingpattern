@@ -4,156 +4,7 @@
 		"description": "Enable Audit Trace",
 		"activities": [
 			{
-				"name": "AC_SP_udp_PolarisDW_Audit_Trail",
-				"description": "Start Recording the event",
-				"type": "Script",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "ls_sql",
-					"type": "LinkedServiceReference"
-				},
-				"typeProperties": {
-					"scripts": [
-						{
-							"parameters": [
-								{
-									"name": "Para_PipelineRunId",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_PipelineRunId",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_DatasetId",
-									"type": "Int32",
-									"value": {
-										"value": "@pipeline().parameters.Para_DatasetId",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_ProgramUnitName",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_ProgramUnitName",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_JobStatus",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_JobStatus",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_ProcessedRecordCount",
-									"type": "Int32",
-									"value": {
-										"value": "@pipeline().parameters.Para_ProcessedRecordCount",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_RejectedRecordCount",
-									"type": "Int32",
-									"value": {
-										"value": "@pipeline().parameters.Para_RejectedRecordCount",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_Comments",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_Comments",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_SizeOfDataRead",
-									"type": "Int32",
-									"value": {
-										"value": "@pipeline().parameters.Para_SizeOfDataRead",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_SizeOfDataWritten",
-									"type": "Int32",
-									"value": {
-										"value": "@pipeline().parameters.Para_SizeOfDataWritten",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_Duration",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_Duration",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "Para_JobStage",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().parameters.Para_JobStage",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "ParaTargetEnv",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().globalParameters.vGlobalEnv",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								},
-								{
-									"name": "ParaMetaSchema",
-									"type": "String",
-									"value": {
-										"value": "@pipeline().globalParameters.vGlobalMetaEngine",
-										"type": "Expression"
-									},
-									"direction": "Input"
-								}
-							],
-							"type": "Query",
-							"text": {
-								"value": "@concat('CALL ',pipeline().globalParameters.vGlobalEnv,'_',pipeline().globalParameters.vGlobalMetaEngine,'.udp_PolarisDW_Audit_Trail(',\n'''',\npipeline().parameters.Para_PipelineRunId,\n''',',\nstring(pipeline().parameters.Para_DatasetId), \n',',\n'''',\npipeline().parameters.Para_ProgramUnitName,\n''',',\n'''',\npipeline().parameters.Para_JobStatus,\n''',',\nstring(pipeline().parameters.Para_ProcessedRecordCount), \n',',\nstring(pipeline().parameters.Para_RejectedRecordCount), \n',',\n'''',\npipeline().parameters.Para_Comments,\n''',',\nstring(pipeline().parameters.Para_SizeOfDataRead), \n',',\nstring(pipeline().parameters.Para_SizeOfDataWritten), \n',',\n'''',\npipeline().parameters.Para_Duration,\n''',',\n'''',\npipeline().parameters.Para_JobStage,\n''',',\n'''',\npipeline().globalParameters.vGlobalEnv,\n''',',\n'''',\npipeline().globalParameters.vGlobalMetaEngine,\n'''',\n');')\n",
-								"type": "Expression"
-							}
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
-			},
-			{
-				"name": "Stored procedure1",
+				"name": "AC_SP",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [],
 				"policy": {
@@ -164,6 +15,95 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[MetaDataEngine].[udp_SLIngestionPattern_AuditTrace]",
+					"storedProcedureParameters": {
+						"Para_Comments": {
+							"value": {
+								"value": "@pipeline().parameters.Para_Comments",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_DatasetId": {
+							"value": {
+								"value": "@pipeline().parameters.Para_DatasetId",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"Para_Duration": {
+							"value": {
+								"value": "@pipeline().parameters.Para_Duration",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_JobStage": {
+							"value": {
+								"value": "@pipeline().parameters.Para_JobStage",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_JobStatus": {
+							"value": {
+								"value": "@pipeline().parameters.Para_JobStatus",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_PipelineRunId": {
+							"value": {
+								"value": "@pipeline().parameters.Para_PipelineRunId",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_ProcessedRecordCount": {
+							"value": {
+								"value": "@pipeline().parameters.Para_ProcessedRecordCount",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"Para_ProgramUnitName": {
+							"value": {
+								"value": "@pipeline().parameters.Para_ProgramUnitName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"Para_RejectedRecordCount": {
+							"value": {
+								"value": "@pipeline().parameters.Para_RejectedRecordCount",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"Para_SizeOfDataRead": {
+							"value": {
+								"value": "@pipeline().parameters.Para_SizeOfDataRead",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"Para_SizeOfDataWritten": {
+							"value": {
+								"value": "@pipeline().parameters.Para_SizeOfDataWritten",
+								"type": "Expression"
+							},
+							"type": "Int32"
+						},
+						"ParaTargetEnv": {
+							"value": {
+								"value": "@pipeline().parameters.Para_TargetEnv",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
 				"linkedServiceName": {
 					"referenceName": "ls_sql",
 					"type": "LinkedServiceReference"
@@ -202,6 +142,9 @@
 				"type": "string"
 			},
 			"Para_JobStage": {
+				"type": "string"
+			},
+			"Para_TargetEnv": {
 				"type": "string"
 			}
 		},
