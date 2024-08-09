@@ -23,7 +23,7 @@
 			},
 			{
 				"name": "AC_SP_SLIP_ErrorLog",
-				"description": "Log SL ingestion error details and related informations.",
+				"description": "Log SL ingestion error details and related information's.",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
