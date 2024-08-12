@@ -1,12 +1,8 @@
 {
-	"name": "DS_PolarisBlobConfigExcelDW",
+	"name": "DS_SLIPMetaDataConfigExcel",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "ls_storage",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
-			"name": "DS_PolarisDW"
+			"name": "DS_SLIngestionPattern"
 		},
 		"annotations": [],
 		"type": "Excel",
