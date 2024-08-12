@@ -20,6 +20,59 @@
 			"range": "",
 			"firstRowAsHeader": true
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "SLIPDataSet",
+				"type": "String"
+			},
+			{
+				"name": "FREQUENCYID",
+				"type": "String"
+			},
+			{
+				"name": "LOADTYPEID",
+				"type": "String"
+			},
+			{
+				"name": "Primary Key",
+				"type": "String"
+			},
+			{
+				"name": "Rerun",
+				"type": "String"
+			},
+			{
+				"name": "Active",
+				"type": "String"
+			},
+			{
+				"name": "Subject to Change",
+				"type": "String"
+			},
+			{
+				"name": "Transformations",
+				"type": "String"
+			},
+			{
+				"name": "Transform Type",
+				"type": "String"
+			},
+			{
+				"name": "Used For",
+				"type": "String"
+			},
+			{
+				"name": "Updated",
+				"type": "String"
+			},
+			{
+				"name": "Updated By",
+				"type": "String"
+			},
+			{
+				"name": "Reason for Change",
+				"type": "String"
+			}
+		]
 	}
 }
