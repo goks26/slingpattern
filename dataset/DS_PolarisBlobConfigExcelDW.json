@@ -1,0 +1,36 @@
+{
+	"name": "DS_PolarisBlobConfigExcelDW",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_storage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_PolarisDW"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "ActiveColumnImportList",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "PolarisActiveColumnsforBI.xlsx",
+				"folderPath": "DWConfig",
+				"container": "snowflakestaging"
+			},
+			"range": "",
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}
