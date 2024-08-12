@@ -3,7 +3,16 @@
 	"properties": {
 		"type": "WranglingDataFlow",
 		"typeProperties": {
-			"sources": []
+			"sources": [
+				{
+					"name": "DS_SLIPMetaDataConfigExcel",
+					"script": "source(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  DS_SLIPMetaDataConfigExcel",
+					"dataset": {
+						"referenceName": "DS_SLIPMetaDataConfigExcel",
+						"type": "DatasetReference"
+					}
+				}
+			]
 		}
 	}
 }
