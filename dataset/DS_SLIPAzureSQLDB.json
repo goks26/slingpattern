@@ -10,7 +10,117 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": []
+		"schema": [
+			{
+				"name": "DataSetId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DataSetName",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetDescription",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetQuery",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetCondition",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetContactDetail",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetType",
+				"type": "varchar"
+			},
+			{
+				"name": "OrigDataSetCreatedDateTime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DataSetCreatedUser",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetActiveFlg",
+				"type": "char"
+			},
+			{
+				"name": "DataSetBronzeADLSPath",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetBronzeADLSFileName",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetSilverADLSPath",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetSilverADLSFileName",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetFrequencyId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DataSetLoadTypeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DataSetMaidenLoad",
+				"type": "char"
+			},
+			{
+				"name": "DWSinkRawStructure",
+				"type": "char"
+			},
+			{
+				"name": "DataSetPrimaryKey",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetHistoryFlag",
+				"type": "char"
+			},
+			{
+				"name": "DataSetLastRefreshTimeStamp",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DataSetPreviousRunStatus",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetReRun",
+				"type": "varchar"
+			},
+			{
+				"name": "MetaDataSetCreatedDateTime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "MetaDataEngine",
+			"table": "DataSetProcessMaster"
+		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
 }
