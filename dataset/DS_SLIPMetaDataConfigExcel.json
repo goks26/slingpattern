@@ -1,32 +1,25 @@
 {
 	"name": "DS_SLIPMetaDataConfigExcel",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sling_blob",
+			"type": "LinkedServiceReference"
+		},
 		"folder": {
 			"name": "DS_SLIngestionPattern"
 		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "ActiveColumnImportList",
+			"sheetName": "SLIP_MetaData_Config",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "PolarisActiveColumnsforBI.xlsx",
-				"folderPath": "DWConfig",
-				"container": "snowflakestaging"
+				"fileName": "SLIPMetaDataConfiguration.xlsx",
+				"container": "slip-metadataengine"
 			},
 			"range": "",
 			"firstRowAsHeader": true
 		},
-		"schema": [
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }
