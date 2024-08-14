@@ -23,11 +23,294 @@
 							"enablePartitionDiscovery": false
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE [MetaDataEngine].[DataSetProcessMasterTbl]",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "SLIPDataSet",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Description",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetDescription",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DataSetType",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetTypeId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Filter",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetFilter",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "FilterCondition",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetCondition",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FREQUENCYID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetFrequencyId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "LOADTYPEID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetLoadTypeId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Primary Key",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetPrimaryKey",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Rerun",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetReRun",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Active",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetActiveFlg",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "Subject to Change",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetHistoryFlag",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"source": {
+									"name": "Transformations",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetBronzeADLSPath",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Transform Type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetBronzeADLSFileName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Used For",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetSilverADLSPath",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Updated",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetSilverADLSFileName",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Updated By",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetFrequencyId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Reason for Change",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "DataSetLoadTypeId",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"sink": {
+									"name": "DataSetMaidenLoad",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"sink": {
+									"name": "DWSinkRawStructure",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"sink": {
+									"name": "DataSetPrimaryKey",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"sink": {
+									"name": "DataSetHistoryFlag",
+									"type": "String",
+									"physicalType": "char"
+								}
+							},
+							{
+								"sink": {
+									"name": "DataSetLastRefreshTimeStamp",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							},
+							{
+								"sink": {
+									"name": "DataSetPreviousRunStatus",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"sink": {
+									"name": "DataSetReRun",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"sink": {
+									"name": "MetaDataSetCreatedDateTime",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "DS_SLIPMetaDataConfigExcel",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_SLIPAzureSQLMetaDataDB",
 						"type": "DatasetReference"
 					}
 				]
