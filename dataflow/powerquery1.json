@@ -13,7 +13,7 @@
 					}
 				}
 			],
-			"script": "section Section1;\r\nshared DSPQ_SLIPMetaDataConfigExcel = let AdfDoc = AzureStorage.BlobContents(\"https://rsadlspoc001.blob.core.windows.net/slip-metadataengine/SLIPMetaDataConfiguration.xlsx\"), Excel = Excel.Workbook(AdfDoc),ExcelSheet = Excel{[Item=\"SLIP_MetaData_Config\",Kind=\"Sheet\"]}[Data], PromotedHeaders = Table.PromoteHeaders(ExcelSheet, [PromoteAllScalars = true]) in PromotedHeaders;\r\nshared UserQuery = let Source = #\"DSPQ_SLIPMetaDataConfigExcel\",\r\n  #\"Removed bottom rows\" = Table.RemoveLastN(Source, 1),\r\n  #\"Changed column type\" = Table.TransformColumnTypes(#\"Removed bottom rows\", {{\"Updated\", type date}, {\"LOADTYPEID\", Int64.Type}, {\"DataSetType\", Int64.Type}, {\"FREQUENCYID\", Int64.Type}}) in #\"Changed column type\";\r\n",
+			"script": "section Section1;\r\nshared DSPQ_SLIPMetaDataConfigExcel = let AdfDoc = AzureStorage.BlobContents(\"https://rsadlspoc001.blob.core.windows.net/slip-metadataengine/SLIPMetaDataConfiguration.xlsx\"), Excel = Excel.Workbook(AdfDoc),ExcelSheet = Excel{[Item=\"SLIP_MetaData_Config\",Kind=\"Sheet\"]}[Data], PromotedHeaders = Table.PromoteHeaders(ExcelSheet, [PromoteAllScalars = true]) in PromotedHeaders;\r\nshared UserQuery = let Source = #\"DSPQ_SLIPMetaDataConfigExcel\",\r\n  #\"Removed bottom rows\" = Table.RemoveLastN(Source, 1),\r\n  #\"Changed column type\" = Table.TransformColumnTypes(#\"Removed bottom rows\", {{\"Updated\", type datetime}, {\"LOADTYPEID\", Int64.Type}, {\"DataSetType\", Int64.Type}, {\"FREQUENCYID\", Int64.Type}}) in #\"Changed column type\";\r\n",
 			"documentLocale": "en-us"
 		}
 	}
