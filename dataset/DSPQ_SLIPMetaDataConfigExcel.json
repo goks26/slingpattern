@@ -1,0 +1,94 @@
+{
+	"name": "DSPQ_SLIPMetaDataConfigExcel",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sling_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_SLIngestionPattern"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "SLIP_MetaData_Config",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SLIPMetaDataConfiguration.xlsx",
+				"container": "slip-metadataengine"
+			},
+			"range": "",
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "SLIPDataSet",
+				"type": "String"
+			},
+			{
+				"name": "Description",
+				"type": "String"
+			},
+			{
+				"name": "DataSetType",
+				"type": "String"
+			},
+			{
+				"name": "Filter",
+				"type": "String"
+			},
+			{
+				"name": "FilterCondition",
+				"type": "String"
+			},
+			{
+				"name": "FREQUENCYID",
+				"type": "String"
+			},
+			{
+				"name": "LOADTYPEID",
+				"type": "String"
+			},
+			{
+				"name": "Primary Key",
+				"type": "String"
+			},
+			{
+				"name": "Rerun",
+				"type": "String"
+			},
+			{
+				"name": "Active",
+				"type": "String"
+			},
+			{
+				"name": "Subject to Change",
+				"type": "String"
+			},
+			{
+				"name": "Transformations",
+				"type": "String"
+			},
+			{
+				"name": "Transform Type",
+				"type": "String"
+			},
+			{
+				"name": "Used For",
+				"type": "String"
+			},
+			{
+				"name": "Updated",
+				"type": "String"
+			},
+			{
+				"name": "Updated By",
+				"type": "String"
+			},
+			{
+				"name": "Reason for Change",
+				"type": "String"
+			}
+		]
+	}
+}
