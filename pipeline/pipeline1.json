@@ -139,7 +139,7 @@
 								"sink": {
 									"name": "DataSetReRun",
 									"type": "String",
-									"physicalType": "varchar"
+									"physicalType": "char"
 								}
 							},
 							{
@@ -173,9 +173,9 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "DataSetBronzeADLSPath",
+									"name": "DataSetTransformation",
 									"type": "String",
-									"physicalType": "varchar"
+									"physicalType": "char"
 								}
 							},
 							{
@@ -185,113 +185,9 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "DataSetBronzeADLSFileName",
+									"name": "DataSetTransformationType",
 									"type": "String",
 									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Used For",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DataSetSilverADLSPath",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Updated",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DataSetSilverADLSFileName",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "Updated By",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DataSetFrequencyId",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"source": {
-									"name": "Reason for Change",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DataSetLoadTypeId",
-									"type": "Int32",
-									"physicalType": "int"
-								}
-							},
-							{
-								"sink": {
-									"name": "DataSetMaidenLoad",
-									"type": "String",
-									"physicalType": "char"
-								}
-							},
-							{
-								"sink": {
-									"name": "DWSinkRawStructure",
-									"type": "String",
-									"physicalType": "char"
-								}
-							},
-							{
-								"sink": {
-									"name": "DataSetPrimaryKey",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"sink": {
-									"name": "DataSetHistoryFlag",
-									"type": "String",
-									"physicalType": "char"
-								}
-							},
-							{
-								"sink": {
-									"name": "DataSetLastRefreshTimeStamp",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								}
-							},
-							{
-								"sink": {
-									"name": "DataSetPreviousRunStatus",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"sink": {
-									"name": "DataSetReRun",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"sink": {
-									"name": "MetaDataSetCreatedDateTime",
-									"type": "DateTime",
-									"physicalType": "datetime"
 								}
 							}
 						],
