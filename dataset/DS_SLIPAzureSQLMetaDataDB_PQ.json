@@ -1,0 +1,143 @@
+{
+	"name": "DS_SLIPAzureSQLMetaDataDB_PQ",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sql",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_SLIngestionPattern"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DataSetId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DataSetName",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetDescription",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetQuery",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetFilter",
+				"type": "char"
+			},
+			{
+				"name": "DataSetCondition",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetContactDetail",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetTypeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OrigDataSetCreatedDateTime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DataSetCreatedUser",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetActiveFlg",
+				"type": "char"
+			},
+			{
+				"name": "DataSetBronzeADLSPath",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetBronzeADLSFileName",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetSilverADLSPath",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetSilverADLSFileName",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetFrequencyId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DataSetLoadTypeId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DataSetMaidenLoad",
+				"type": "char"
+			},
+			{
+				"name": "DWSinkRawStructure",
+				"type": "char"
+			},
+			{
+				"name": "DataSetPrimaryKey",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetHistoryFlag",
+				"type": "char"
+			},
+			{
+				"name": "DataSetLastRefreshTimeStamp",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DataSetPreviousRunStatus",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetReRun",
+				"type": "char"
+			},
+			{
+				"name": "MetaDataSetCreatedDateTime",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DataSetTransformation",
+				"type": "char"
+			},
+			{
+				"name": "DataSetTransformationType",
+				"type": "varchar"
+			},
+			{
+				"name": "DataSetComments",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "MetaDataEngine",
+			"table": "DataSetProcessMasterTbl"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
