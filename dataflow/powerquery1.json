@@ -5,15 +5,15 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"name": "DS_SLIPMetaDataConfigExcel",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  DS_SLIPMetaDataConfigExcel",
+					"name": "DSPQ_SLIPMetaDataConfigExcel",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  DSPQ_SLIPMetaDataConfigExcel",
 					"dataset": {
-						"referenceName": "DS_SLIPMetaDataConfigExcel",
+						"referenceName": "DSPQ_SLIPMetaDataConfigExcel",
 						"type": "DatasetReference"
 					}
 				}
 			],
-			"script": "section Section1;\r\nshared DS_SLIPMetaDataConfigExcel = let AdfDoc = AzureStorage.BlobContents(\"https://rsadlspoc001.blob.core.windows.net/slip-metadataengine/SLIPMetaDataConfiguration.xlsx\"), Excel = Excel.Workbook(AdfDoc),ExcelSheet = Excel{[Item=\"SLIP_MetaData_Config\",Kind=\"Sheet\"]}[Data], PromotedHeaders = Table.PromoteHeaders(ExcelSheet, [PromoteAllScalars = true]) in PromotedHeaders;\r\nshared UserQuery = let Source = #\"DS_SLIPMetaDataConfigExcel\",\n  #\"Split column by delimiter\" = Table.SplitColumn(Source, \"SLIPDataSet\", Splitter.SplitTextByEachDelimiter({\".\"}, QuoteStyle.None, true), {\"SLIPDataSet.1\", \"SLIPDataSet.2\"}),\n  #\"Removed bottom rows\" = Table.RemoveLastN(#\"Split column by delimiter\", 1)\nin\n#\"Removed bottom rows\";\r\n",
+			"script": "section Section1;\r\nshared DSPQ_SLIPMetaDataConfigExcel = let AdfDoc = AzureStorage.BlobContents(\"https://rsadlspoc001.blob.core.windows.net/slip-metadataengine/SLIPMetaDataConfiguration.xlsx\"), Excel = Excel.Workbook(AdfDoc),ExcelSheet = Excel{[Item=\"SLIP_MetaData_Config\",Kind=\"Sheet\"]}[Data], PromotedHeaders = Table.PromoteHeaders(ExcelSheet, [PromoteAllScalars = true]) in PromotedHeaders;\r\nshared DS_SLIPMetaDataConfigExcel = let AdfDoc = AzureStorage.BlobContents(\"https://rsadlspoc001.blob.core.windows.net/slip-metadataengine/SLIPMetaDataConfiguration.xlsx\"), Excel = Excel.Workbook(AdfDoc),ExcelSheet = Excel{[Item=\"SLIP_MetaData_Config\",Kind=\"Sheet\"]}[Data], PromotedHeaders = Table.PromoteHeaders(ExcelSheet, [PromoteAllScalars = true]),\r\n  #\"Removed bottom rows\" = Table.RemoveLastN(PromotedHeaders, 1) in #\"Removed bottom rows\";\r\n",
 			"documentLocale": "en-us"
 		}
 	}
