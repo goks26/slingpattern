@@ -129,6 +129,52 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "AC_PL_ErrorTrace",
+				"description": "Capture SLIP error messages",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "AC_CPY_BLOB2AzureSQLDB",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_CH_DML_INSERT_SLIPError",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Para_PipelineRunId": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						},
+						"Para_JobStage": {
+							"value": "MetaData Creation",
+							"type": "Expression"
+						},
+						"Para_ErrorSeverity": {
+							"value": "Critical",
+							"type": "Expression"
+						},
+						"Para_ErrorProgramUnitName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
+						"Para_ErrorMessage": {
+							"value": "@concat(' Activity AC_CPY_BLOB2AzureSQLDB Failed for ',activity('AC_CPY_BLOB2AzureSQLDB').Error.message)",
+							"type": "Expression"
+						}
+					}
+				}
 			}
 		],
 		"annotations": []
