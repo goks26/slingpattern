@@ -1,5 +1,5 @@
 {
-	"name": "PL_MR_CreateSLIPMetaData",
+	"name": "PL_MR_CreateSLIPMetaData_STEP1",
 	"properties": {
 		"activities": [
 			{
@@ -58,6 +58,26 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "AC_ExP_AuditTrace",
+				"description": "Call  SLIPAudit Pipeline to record copy audit.",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "AC_CPY_BLOB2AzureSQLDB",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"annotations": []
