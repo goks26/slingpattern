@@ -76,7 +76,58 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"waitOnCompletion": true
+					"pipeline": {
+						"referenceName": "PL_CH_DML_INSERT_SLIPAudit",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Para_PipelineRunId": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						},
+						"Para_DatasetId": 9999,
+						"Para_ProgramUnitName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
+						"Para_JobStatus": {
+							"value": "Succeeded",
+							"type": "Expression"
+						},
+						"Para_ProcessedRecordCount": {
+							"value": "@activity('AC_CPY_BLOB2AzureSQLDB').output.rowsCopied",
+							"type": "Expression"
+						},
+						"Para_RejectedRecordCount": {
+							"value": "0",
+							"type": "Expression"
+						},
+						"Para_Comments": {
+							"value": "@concat('Actual Copy Duration is  ',activity('AC_CPY_BLOB2AzureSQLDB').output.copyDuration)",
+							"type": "Expression"
+						},
+						"Para_SizeOfDataRead": {
+							"value": "@activity('AC_CPY_BLOB2AzureSQLDB').output.dataRead",
+							"type": "Expression"
+						},
+						"Para_SizeOfDataWritten": {
+							"value": "@activity('AC_CPY_BLOB2AzureSQLDB').output.dataWritten",
+							"type": "Expression"
+						},
+						"Para_Duration": {
+							"value": "@concat( 'AC_CPY_BLOB2AzureSQLDB Total Billable Duration..',activity('AC_CPY_BLOB2AzureSQLDB').output.billingReference.totalBillableDuration[0].duration)\n\n",
+							"type": "Expression"
+						},
+						"Para_JobStage": {
+							"value": "MetaData Creation",
+							"type": "Expression"
+						},
+						"Para_TargetEnv": {
+							"value": "@pipeline().globalParameters.vGlobalEnv",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
