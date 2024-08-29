@@ -12,12 +12,7 @@
 		"type": "Excel",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation",
-				"fileName": "SLIPMetaDataConfiguration.xlsx",
-				"container": {
-					"value": "@concat()",
-					"type": "Expression"
-				}
+				"type": "AzureBlobStorageLocation"
 			},
 			"range": "",
 			"firstRowAsHeader": true
