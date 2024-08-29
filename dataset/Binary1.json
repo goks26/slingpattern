@@ -14,13 +14,28 @@
 			},
 			"vPath": {
 				"type": "string"
+			},
+			"vDataSet": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation"
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().vDataSet",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().vPath",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@concat(dataset().vEnv,'_',dataset().vLake)",
+					"type": "Expression"
+				}
 			}
 		}
 	}
