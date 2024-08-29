@@ -51,7 +51,25 @@
 				"outputs": [
 					{
 						"referenceName": "DelimitedText1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"vEnv": {
+								"value": "@concat(pipeline().globalParameters.vGlobalEnv,'_',pipeline().globalParameters.vGobalLakeName)",
+								"type": "Expression"
+							},
+							"vLake": {
+								"value": "@pipeline().globalParameters.vGobalLakeName",
+								"type": "Expression"
+							},
+							"vPath": {
+								"value": "@pipeline().globalParameters.vGlobalBronze",
+								"type": "Expression"
+							},
+							"vDataSet": {
+								"value": "slipdataset",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
