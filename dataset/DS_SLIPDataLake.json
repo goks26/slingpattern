@@ -1,0 +1,27 @@
+{
+	"name": "DS_SLIPDataLake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sling_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_SLIngestionPattern"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SLIPMetaDataConfiguration.xlsx",
+				"container": {
+					"value": "@concat()",
+					"type": "Expression"
+				}
+			},
+			"range": "",
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
