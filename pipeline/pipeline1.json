@@ -41,10 +41,34 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"isSequential": true
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "vFullPath",
+								"value": {
+									"value": "@activity('Lookup1').output.value",
+									"type": "Expression"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
+		"variables": {
+			"vFullPath": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
