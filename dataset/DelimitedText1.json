@@ -9,9 +9,6 @@
 			"vEnv": {
 				"type": "string"
 			},
-			"vLake": {
-				"type": "string"
-			},
 			"vPath": {
 				"type": "string"
 			},

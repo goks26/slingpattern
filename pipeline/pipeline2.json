@@ -5,7 +5,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "AC_SV_SetMonthValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -54,19 +61,15 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"vEnv": {
-								"value": "@concat(pipeline().globalParameters.vGlobalEnv,'_',pipeline().globalParameters.vGobalLakeName)",
-								"type": "Expression"
-							},
-							"vLake": {
-								"value": "@pipeline().globalParameters.vGobalLakeName",
+								"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)\n\n",
 								"type": "Expression"
 							},
 							"vPath": {
-								"value": "@pipeline().globalParameters.vGlobalBronze",
+								"value": "@concat(pipeline().globalParameters.vGlobalBronze,'/slipdataset/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'))",
 								"type": "Expression"
 							},
 							"vDataSet": {
-								"value": "slipdataset",
+								"value": "SLIPMetaData",
 								"type": "Expression"
 							}
 						}
@@ -74,7 +77,7 @@
 				]
 			},
 			{
-				"name": "Set variable1",
+				"name": "AC_SV_SetQtrValue",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
@@ -89,10 +92,64 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "AC_SV_SetYearValue",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "AC_SV_SetQtrValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vYear",
+					"value": {
+						"value": "@formatDateTime(utcnow(),'yyyy')\n\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "AC_SV_SetMonthValue",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "AC_SV_SetYearValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vMonth",
+					"value": {
+						"value": "@formatDateTime(utcnow(),'MMM')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
 			"vQtr": {
+				"type": "String"
+			},
+			"vYear": {
+				"type": "String"
+			},
+			"vMonth": {
 				"type": "String"
 			}
 		},
