@@ -9,6 +9,10 @@
 			"vGobalLakeName": {
 				"type": "string",
 				"value": "slip-semslake"
+			},
+			"vGlobalBronze": {
+				"type": "string",
+				"value": "Bronze"
 			}
 		}
 	},
