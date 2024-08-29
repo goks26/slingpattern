@@ -5,6 +5,10 @@
 			"vGlobalEnv": {
 				"type": "string",
 				"value": "DEV"
+			},
+			"vGobalLakeName": {
+				"type": "string",
+				"value": "slip-semslake"
 			}
 		}
 	},
