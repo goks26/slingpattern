@@ -13,6 +13,10 @@
 			"vGlobalBronze": {
 				"type": "string",
 				"value": "Bronze"
+			},
+			"vGlobalSilver": {
+				"type": "string",
+				"value": "Silver"
 			}
 		}
 	},
