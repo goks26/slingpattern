@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "AC_LKP_DataSetProcessMasterTbl",
 				"type": "Lookup",
 				"dependsOn": [
 					{
@@ -40,7 +40,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "AC_LKP_DataSetProcessMasterTbl",
 						"dependencyConditions": [
 							"Succeeded"
 						]
