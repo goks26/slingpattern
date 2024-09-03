@@ -183,6 +183,9 @@
 			},
 			"vMonth": {
 				"type": "String"
+			},
+			"vQtr": {
+				"type": "String"
 			}
 		},
 		"annotations": []
