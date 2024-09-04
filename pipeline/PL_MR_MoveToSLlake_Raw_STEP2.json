@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "PL_MR_MoveToSLlake_Raw_STEP2",
 	"properties": {
 		"activities": [
 			{
@@ -279,6 +279,9 @@
 			"vQtr": {
 				"type": "String"
 			}
+		},
+		"folder": {
+			"name": "PL_SLIngestionPattern/SLIPMetaDataEngine"
 		},
 		"annotations": []
 	}
