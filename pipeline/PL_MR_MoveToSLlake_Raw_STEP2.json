@@ -134,11 +134,11 @@
 											"type": "Expression"
 										},
 										"vPath": {
-											"value": "@concat(pipeline().globalParameters.vGlobalBronze,'/slipdataset/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'))",
+											"value": "@concat(pipeline().globalParameters.vGlobalBronze,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',item().DataSetName,'/')\n\n",
 											"type": "Expression"
 										},
 										"vDataSet": {
-											"value": "SLIPMetaData",
+											"value": "@item().DataSetName",
 											"type": "Expression"
 										}
 									}
