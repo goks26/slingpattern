@@ -32,25 +32,11 @@
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
-				"inputs": [
-					{
-						"referenceName": "DSPQ_SLIPMetaDataConfigExcel",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
-						"referenceName": "DS_SLIPAzureSQLMetaDataDB_PQ",
+						"referenceName": "DS_SLIPAzureSQLMetaDataDB",
 						"type": "DatasetReference",
 						"parameters": {
 							"RawSLDS_Schema": "MetaDataEngine",

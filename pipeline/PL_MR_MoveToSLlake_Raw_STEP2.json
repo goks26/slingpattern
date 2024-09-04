@@ -104,8 +104,22 @@
 										"fileExtension": ".txt"
 									}
 								},
-								"enableStaging": false
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
+							"inputs": [
+								{
+									"referenceName": "DS_SLIPAzureSQLMetaDataDB",
+									"type": "DatasetReference"
+								}
+							],
 							"outputs": [
 								{
 									"referenceName": "DS_SLIPLakeIngestion_CSV",

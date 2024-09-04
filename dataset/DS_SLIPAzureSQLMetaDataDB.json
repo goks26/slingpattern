@@ -1,5 +1,5 @@
 {
-	"name": "DS_SLIPAzureSQLMetaDataDB_PQ",
+	"name": "DS_SLIPAzureSQLMetaDataDB",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_sql",
