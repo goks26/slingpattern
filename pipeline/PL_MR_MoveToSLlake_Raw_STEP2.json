@@ -28,10 +28,6 @@
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
-					"dataset": {
-						"referenceName": "DS_SLIPAzureSQLMetaDataDB",
-						"type": "DatasetReference"
-					},
 					"firstRowOnly": false
 				}
 			},
@@ -108,25 +104,11 @@
 										"fileExtension": ".txt"
 									}
 								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
+								"enableStaging": false
 							},
-							"inputs": [
-								{
-									"referenceName": "DS_SLIPAzureSQLMetaDataDB",
-									"type": "DatasetReference"
-								}
-							],
 							"outputs": [
 								{
-									"referenceName": "DelimitedText1",
+									"referenceName": "DS_SLIPLakeIngestion_CSV",
 									"type": "DatasetReference",
 									"parameters": {
 										"vEnv": {
