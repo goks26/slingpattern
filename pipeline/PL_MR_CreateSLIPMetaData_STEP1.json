@@ -181,7 +181,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "AC_PL_ErrorTrace",
+						"activity": "AC_PL_AuditTrace",
 						"dependencyConditions": [
 							"Succeeded"
 						]
