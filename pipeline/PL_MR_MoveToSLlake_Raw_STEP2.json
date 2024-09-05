@@ -55,33 +55,9 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "AC_SV_LookupItemValue",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "vFullPath",
-								"value": {
-									"value": "@item().DataSetSource",
-									"type": "Expression"
-								}
-							}
-						},
-						{
 							"name": "AC_Copy_DrivenByMetaDataEngine",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "AC_SV_LookupItemValue",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -215,9 +191,6 @@
 			}
 		],
 		"variables": {
-			"vFullPath": {
-				"type": "String"
-			},
 			"vYear": {
 				"type": "String"
 			},
