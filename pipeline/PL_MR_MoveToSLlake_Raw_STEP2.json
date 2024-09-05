@@ -28,6 +28,10 @@
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
+					"dataset": {
+						"referenceName": "DS_SLIPAzureSQLMetaDataDB",
+						"type": "DatasetReference"
+					},
 					"firstRowOnly": false
 				}
 			},
