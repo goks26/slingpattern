@@ -120,7 +120,7 @@
 							"type": "Expression"
 						},
 						"Para_JobStage": {
-							"value": "MetaData Creation",
+							"value": "MetaData Stage Creation",
 							"type": "Expression"
 						},
 						"Para_TargetEnv": {
@@ -158,7 +158,7 @@
 							"type": "Expression"
 						},
 						"Para_JobStage": {
-							"value": "MetaData Creation",
+							"value": "MetaData Stage Creation",
 							"type": "Expression"
 						},
 						"Para_ErrorSeverity": {
@@ -209,6 +209,77 @@
 				"linkedServiceName": {
 					"referenceName": "ls_sql",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "AC_PL_AuditTrace_MetaDataCreation",
+				"description": "Call  SLIPAudit Pipeline to record copy audit.",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "AC_SP_SLIP_CreateMetaDataMaster",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_CH_DML_INSERT_SLIPAudit",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"Para_PipelineRunId": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						},
+						"Para_DatasetId": 7777,
+						"Para_ProgramUnitName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
+						"Para_JobStatus": {
+							"value": "Succeeded",
+							"type": "Expression"
+						},
+						"Para_ProcessedRecordCount": {
+							"value": "@activity('AC_SP_SLIP_CreateMetaDataMaster').output.rowsCopied\n\n",
+							"type": "Expression"
+						},
+						"Para_RejectedRecordCount": {
+							"value": "0",
+							"type": "Expression"
+						},
+						"Para_Comments": {
+							"value": "@concat( 'Total Billable Master Data Record Creation Duration..',activity('AC_SP_SLIP_CreateMetaDataMaster').output.billingReference.totalBillableDuration[0].duration)",
+							"type": "Expression"
+						},
+						"Para_SizeOfDataRead": {
+							"value": "@activity('AC_SP_SLIP_CreateMetaDataMaster').output.dataRead",
+							"type": "Expression"
+						},
+						"Para_SizeOfDataWritten": {
+							"value": "@activity('AC_SP_SLIP_CreateMetaDataMaster').output.dataWritten",
+							"type": "Expression"
+						},
+						"Para_Duration": {
+							"value": "@concat('Actual Record Creation Duration is  ',activity('AC_SP_SLIP_CreateMetaDataMaster').output.copyDuration)\n",
+							"type": "Expression"
+						},
+						"Para_JobStage": {
+							"value": "MetaData Master Creation",
+							"type": "Expression"
+						},
+						"Para_TargetEnv": {
+							"value": "@pipeline().globalParameters.vGlobalEnv",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
