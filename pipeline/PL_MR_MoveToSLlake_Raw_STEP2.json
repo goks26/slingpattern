@@ -143,6 +143,77 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "AC_PL_AuditTrace",
+							"description": "Call  SLIPAudit Pipeline to record copy audit.",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "AC_Copy_DrivenByMetaDataEngine",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_DML_INSERT_SLIPAudit",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Para_PipelineRunId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"Para_DatasetId": 7777,
+									"Para_ProgramUnitName": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"Para_JobStatus": {
+										"value": "Succeeded",
+										"type": "Expression"
+									},
+									"Para_ProcessedRecordCount": {
+										"value": "@activity('AC_Copy_DrivenByMetaDataEngine').output.rowsCopied\n\n",
+										"type": "Expression"
+									},
+									"Para_RejectedRecordCount": {
+										"value": "0",
+										"type": "Expression"
+									},
+									"Para_Comments": {
+										"value": "@concat( 'Total Billable Copy Duration..',activity('AC_Copy_DrivenByMetaDataEngine').output.billingReference.totalBillableDuration[0].duration)",
+										"type": "Expression"
+									},
+									"Para_SizeOfDataRead": {
+										"value": "@activity('AC_Copy_DrivenByMetaDataEngine').output.dataRead",
+										"type": "Expression"
+									},
+									"Para_SizeOfDataWritten": {
+										"value": "@activity('AC_Copy_DrivenByMetaDataEngine').output.dataWritten",
+										"type": "Expression"
+									},
+									"Para_Duration": {
+										"value": "@concat('Actual Copy Duration is  ',activity('AC_Copy_DrivenByMetaDataEngine').output.copyDuration)\n",
+										"type": "Expression"
+									},
+									"Para_JobStage": {
+										"value": "Bronze Stage",
+										"type": "Expression"
+									},
+									"Para_TargetEnv": {
+										"value": "@pipeline().globalParameters.vGlobalEnv",
+										"type": "Expression"
+									}
+								}
+							}
 						}
 					]
 				}
