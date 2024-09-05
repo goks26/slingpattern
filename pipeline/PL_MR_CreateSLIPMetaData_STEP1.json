@@ -177,7 +177,7 @@
 				}
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "AC_SP_SLIP_CreateMetaDataMaster",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
