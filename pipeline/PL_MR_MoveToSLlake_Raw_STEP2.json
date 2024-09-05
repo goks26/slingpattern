@@ -30,7 +30,17 @@
 					},
 					"dataset": {
 						"referenceName": "DS_SLIPAzureSQLMetaDataDB",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"RawSLDS_Schema": {
+								"value": "NULL",
+								"type": "Expression"
+							},
+							"RawSLDS_Table": {
+								"value": "NULL",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
@@ -69,7 +79,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "select * from [MetaDataEngine].[SLIPMetaData]",
+									"sqlReaderQuery": {
+										"value": "@concat('SELECT * FROM ',item().DataSetName)",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
@@ -97,7 +110,17 @@
 							"inputs": [
 								{
 									"referenceName": "DS_SLIPAzureSQLMetaDataDB",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"RawSLDS_Schema": {
+											"value": "NULL",
+											"type": "Expression"
+										},
+										"RawSLDS_Table": {
+											"value": "NULL",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
