@@ -202,7 +202,8 @@
 							"value": {
 								"value": "@pipeline().Pipeline",
 								"type": "Expression"
-							}
+							},
+							"type": "String"
 						}
 					}
 				},
