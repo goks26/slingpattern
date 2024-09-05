@@ -175,6 +175,41 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "AC_PL_ErrorTrace",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[MetaDataEngine].[udp_SLSourceDS_MetaDataCreation]",
+					"storedProcedureParameters": {
+						"Para_ProgramUnitName": {
+							"value": {
+								"value": "@pipeline().Pipeline",
+								"type": "Expression"
+							}
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_sql",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
