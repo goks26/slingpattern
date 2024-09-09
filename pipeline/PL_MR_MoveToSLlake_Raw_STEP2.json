@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT DataSetSource, DataSetName,DataSetQuery \nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N'",
+						"sqlReaderQuery": "SELECT DataSetSource, DataSetName,DataSetQuery \nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetPreviousRunStatus IS NULL",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},

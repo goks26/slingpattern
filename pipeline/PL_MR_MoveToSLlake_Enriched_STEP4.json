@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "AC_QRY_SLIPMetaDBStructure",
+				"name": "AC_QRY_SLIPMetaDBStructur",
 				"description": "Pull configured SLIP Ingestion data sets to enrich aka SCD implementation.",
 				"type": "Script",
 				"dependsOn": [],
@@ -22,9 +22,9 @@
 				"typeProperties": {
 					"scripts": [
 						{
-							"type": "Query",
+							"type": "NonQuery",
 							"text": {
-								"value": "@concat(' SELECT distinct split_part(datasetname,''.'',1) as SCHEMA_NAME, ',' REPLACE(split_part(datasetname,''.'',2),''.'',''_'') as TABLE_NAME, ',' DATASETDESCRIPTION, DATASETPRIMARYKEY FROM ',variables('vMetaSchemaProcessMstr'),\n' WHERE DatasetType = ''SQL'' AND DWSINKSTRUCTURE = ''Y'' AND ActiveFlg = ''Y'' AND PREVIOUSRUNSTATUS = ''SUCCESS'';')\n\n\n",
+								"value": "\n\n",
 								"type": "Expression"
 							}
 						}
@@ -38,7 +38,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "AC_QRY_SLIPMetaDBStructure",
+						"activity": "AC_SCR_SLIPMetaDBStructure",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -347,7 +347,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "AC_QRY_SLIPMetaDBStructure",
+						"activity": "AC_SCR_SLIPMetaDBStructure",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -395,6 +395,33 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "AC_SCR_SLIPMetaDBStructure",
+				"description": "Pull configured SLIP Ingestion data sets to enrich aka SCD implementation.",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_sql",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "SELECT DataSetSource, DataSetName,DataSetQuery \nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetTransformation = 'Y' AND DataSetPreviousRunStatus = 'CUR SUCCESS'"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
 				}
 			}
 		],
