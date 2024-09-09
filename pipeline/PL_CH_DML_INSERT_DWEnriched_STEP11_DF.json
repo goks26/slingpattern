@@ -1,0 +1,368 @@
+{
+	"name": "PL_CH_DML_INSERT_DWEnriched_STEP11_DF",
+	"properties": {
+		"description": "Using byNames to fully parameterize a Slowly Change Dimension Type 2 patter",
+		"activities": [
+			{
+				"name": "AC_LA_LookupPolarisCuratedDataSet",
+				"description": "Read previous successful load data sets from POLARISDW_CURATION_SCHEMA  to complete SCD",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "AC_SV_FormTableName",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SnowflakeV2Source",
+						"query": {
+							"value": "@concat(' SELECT DISTINCT E.TABLE_SCHEMA, E.TABLE_NAME FROM information_schema.TABLES E INNER JOIN INFORMATION_SCHEMA.LOAD_HISTORY H ON REPLACE(E.TABLE_NAME,''_ENRICHED'',''_CURATED'') = H.TABLE_NAME ',\n' WHERE TABLE_TYPE = ''BASE TABLE'' AND TABLE_OWNER = ''POLARISUAT_SQL_TEAM'' AND E.TABLE_NAME =  ',\n'''',variables('vFullTableName'),'''',\n' AND E.TABLE_SCHEMA =  ',\n'''',pipeline().globalParameters.vGlobalEnv,'_',pipeline().globalParameters.vGlobalEnriched,'''',\n' ORDER BY E.TABLE_SCHEMA,E.TABLE_NAME ')",
+							"type": "Expression"
+						},
+						"exportSettings": {
+							"type": "SnowflakeExportCopyCommand"
+						}
+					},
+					"dataset": {
+						"referenceName": "DS_PolarisSnowflakeDW",
+						"type": "DatasetReference",
+						"parameters": {
+							"DWSchema": {
+								"value": "NULL",
+								"type": "Expression"
+							},
+							"DWTable": {
+								"value": "NULL",
+								"type": "Expression"
+							}
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "AC_SV_FormTableName",
+				"description": "Assemble the fully qualified table name structure.",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vFullTableName",
+					"value": {
+						"value": "@toUpper(concat(pipeline().parameters.SchemaName,'_',pipeline().parameters.TableName,'_',pipeline().globalParameters.vGlobalEnrichedDS))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "AC_FEA_PullActivePolarisDataSet",
+				"description": "Pull all qualified Polaris Data set for DW Build",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "AC_LA_LookupPolarisCuratedDataSet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('AC_LA_LookupPolarisCuratedDataSet').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "AC_PL_PolarisErrorTrace",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "AC_DF_PolarisDWEnriched_SCD2",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_DML_INSERT_PolarisError",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Para_PipelineRunId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"Para_JobStage": {
+										"value": "DW STEP11 POLARIS DW UPDATE CHANGE HISTORY - AC_FEA_PullActivePolarisDataSet (AC_DF_PolarisDWEnriched_SCD2)",
+										"type": "Expression"
+									},
+									"Para_ErrorSeverity": {
+										"value": "@concat(item().TABLE_NAME,' - DWSTAGE11 AC_DF_PolarisDWEnriched_SCD2 Fatal Error')",
+										"type": "Expression"
+									},
+									"Para_ErrorProgramUnitName": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"Para_ErrorMessage": {
+										"value": "@activity('AC_DF_PolarisDWEnriched_SCD2').Error.message\n\n",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "AC_DF_PolarisDWEnriched_SCD2",
+							"description": "Maintain One history record and One active record",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DF_CH_DML_INSERT_DWEnriched_STEP11",
+									"type": "DataFlowReference",
+									"parameters": {
+										"PrimaryKey": {
+											"value": "'@{toUpper(pipeline().parameters.PrimaryKey)}'",
+											"type": "Expression"
+										},
+										"Columns": {
+											"value": "'@{toUpper(pipeline().parameters.ColumnNames)}'",
+											"type": "Expression"
+										}
+									},
+									"datasetParameters": {
+										"CuratedInput": {
+											"Curated_Schema": {
+												"value": "@replace(item().TABLE_SCHEMA,pipeline().globalParameters.vGlobalEnriched,pipeline().globalParameters.vGlobalCurated)",
+												"type": "Expression"
+											},
+											"Curated_Table": {
+												"value": "@replace(item().TABLE_NAME,pipeline().globalParameters.vGlobalEnrichedDS,pipeline().globalParameters.vGlobalCuratedDS)",
+												"type": "Expression"
+											}
+										},
+										"ExistingDimensionTable": {
+											"Enriched_Schema": {
+												"value": "@item().TABLE_SCHEMA\n\n",
+												"type": "Expression"
+											},
+											"Enriched_Table": {
+												"value": "@item().TABLE_NAME",
+												"type": "Expression"
+											}
+										},
+										"DimensionTableSink": {
+											"Enriched_Schema": {
+												"value": "@item().TABLE_SCHEMA",
+												"type": "Expression"
+											},
+											"Enriched_Table": {
+												"value": "@item().TABLE_NAME",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								"compute": {
+									"coreCount": 32,
+									"computeType": "MemoryOptimized"
+								},
+								"traceLevel": "Coarse"
+							}
+						},
+						{
+							"name": "AC_PL_PolarisAuditInsert",
+							"description": "Capture the audit events",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "AC_DF_PolarisDWEnriched_SCD2",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_DML_INSERT_PolarisAudit",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Para_PipelineRunId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"Para_DatasetId": {
+										"value": "1",
+										"type": "Expression"
+									},
+									"Para_ProgramUnitName": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"Para_JobStatus": {
+										"value": "Completed - AC_FEA_PullPolarisDataStructure (AC_DF_PolarisDWEnriched_SCD2)",
+										"type": "Expression"
+									},
+									"Para_ProcessedRecordCount": {
+										"value": "@activity('AC_DF_PolarisDWEnriched_SCD2').output.runStatus.metrics.DimensionTableSink.rowsWritten\n",
+										"type": "Expression"
+									},
+									"Para_RejectedRecordCount": {
+										"value": "0",
+										"type": "Expression"
+									},
+									"Para_Comments": {
+										"value": "@concat(item().TABLE_NAME,' - DW STEP11 AC_DF_PolarisDWEnriched SCD2 Completed Sucessfully')",
+										"type": "Expression"
+									},
+									"Para_SizeOfDataRead": {
+										"value": "NULL",
+										"type": "Expression"
+									},
+									"Para_SizeOfDataWritten": {
+										"value": "NULL",
+										"type": "Expression"
+									},
+									"Para_Duration": {
+										"value": "@activity('AC_DF_PolarisDWEnriched_SCD2').Duration",
+										"type": "Expression"
+									},
+									"Para_JobStage": {
+										"value": "DW STEP11 AC_DF_PolarisDWEnriched_SCD2 - AC_FEA_PullActivePolarisDataSet",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "AC_IF_NoCurationDataSet",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "AC_LA_LookupPolarisCuratedDataSet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('AC_LA_LookupPolarisCuratedDataSet').output.count,0)",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "AC_PL_PolarisErrorTrace_NoCuration",
+							"description": "Curation Does not exist - Capture Error",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_DML_INSERT_PolarisError",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Para_PipelineRunId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"Para_JobStage": {
+										"value": "DW STEP11 POLARIS DW UPDATE CHANGE HISTORY - AC_IF_NoCurationDataSet (TRUE)",
+										"type": "Expression"
+									},
+									"Para_ErrorSeverity": {
+										"value": "@concat(replace(variables('vFullTableName'),pipeline().globalParameters.vGlobalEnrichedDS,pipeline().globalParameters.vGlobalCuratedDS),' Previous successful load does not exist or Missing Enriched Structure - DWSTAGE11 AC_DF_PolarisDWEnriched_SCD2 Fatal Error')",
+										"type": "Expression"
+									},
+									"Para_ErrorProgramUnitName": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"Para_ErrorMessage": {
+										"value": "@concat(variables('vFullTableName'),'- Does not exist or no change data from previous load ',' DW STEP11 completed without any enrichment')",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"PrimaryKey": {
+				"type": "string"
+			},
+			"ColumnNames": {
+				"type": "string"
+			},
+			"TableName": {
+				"type": "string"
+			},
+			"SchemaName": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"vErrMsg": {
+				"type": "String"
+			},
+			"vDFDuration": {
+				"type": "String"
+			},
+			"vFullTableName": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "PL_PolarisDW/DWEnrichedLayer"
+		},
+		"annotations": []
+	}
+}
