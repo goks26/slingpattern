@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "AC_FEA_EnrichDWPolarisDataSets",
-				"description": "Pull Polaris CRM Source DB structure for every configured DW data set.",
+				"name": "AC_FEA_EnrichSLIPDataSets",
+				"description": "For every configured SLIP data set.",
 				"type": "ForEach",
 				"dependsOn": [
 					{
