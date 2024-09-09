@@ -1,5 +1,5 @@
 {
-	"name": "DF_CH_DML_INSERT_DWEnriched_STEP11",
+	"name": "DF_CH_MoveToSLlake_Enriched_STEP4",
 	"properties": {
 		"folder": {
 			"name": "SLIPSCD_Enriched"
