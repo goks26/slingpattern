@@ -1,5 +1,5 @@
 {
-	"name": "PL_MR_DML_INSERT_DWEnriched_STEP10",
+	"name": "PL_MR_MoveToSLlake_Enriched_STEP4",
 	"properties": {
 		"activities": [
 			{
@@ -196,7 +196,7 @@
 										"userProperties": [],
 										"typeProperties": {
 											"pipeline": {
-												"referenceName": "PL_CH_DML_INSERT_DWEnriched_STEP11_DF",
+												"referenceName": "PL_CH_MoveToSLlake_Enriched_STEP4",
 												"type": "PipelineReference"
 											},
 											"waitOnCompletion": true,
@@ -274,7 +274,7 @@
 										"userProperties": [],
 										"typeProperties": {
 											"pipeline": {
-												"referenceName": "PL_CH_DML_INSERT_DWEnriched_STEP11_DF",
+												"referenceName": "PL_CH_MoveToSLlake_Enriched_STEP4",
 												"type": "PipelineReference"
 											},
 											"waitOnCompletion": true,
