@@ -22,10 +22,6 @@
 					"secureInput": false
 				},
 				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "ls_snowflake",
-					"type": "LinkedServiceReference"
-				},
 				"typeProperties": {
 					"scripts": [
 						{
@@ -157,10 +153,6 @@
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"pipeline": {
-												"referenceName": "PL_CH_DML_INSERT_PolarisError",
-												"type": "PipelineReference"
-											},
 											"waitOnCompletion": true,
 											"parameters": {
 												"Para_PipelineRunId": {
@@ -244,10 +236,6 @@
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"pipeline": {
-												"referenceName": "PL_CH_DML_INSERT_PolarisError",
-												"type": "PipelineReference"
-											},
 											"waitOnCompletion": true,
 											"parameters": {
 												"Para_PipelineRunId": {
@@ -326,10 +314,6 @@
 										},
 										"userProperties": [],
 										"typeProperties": {
-											"pipeline": {
-												"referenceName": "PL_CH_DML_INSERT_PolarisError",
-												"type": "PipelineReference"
-											},
 											"waitOnCompletion": true,
 											"parameters": {
 												"Para_PipelineRunId": {
@@ -406,10 +390,6 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"pipeline": {
-									"referenceName": "PL_CH_DML_INSERT_PolarisError",
-									"type": "PipelineReference"
-								},
 								"waitOnCompletion": true,
 								"parameters": {
 									"Para_PipelineRunId": {
@@ -451,7 +431,7 @@
 			}
 		},
 		"folder": {
-			"name": "PL_PolarisDW/DWEnrichedLayer"
+			"name": "PL_SLIngestionPattern/SLIPIngestionLayers"
 		},
 		"annotations": []
 	}
