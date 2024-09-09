@@ -339,26 +339,34 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_DML_INSERT_SLIPAudit",
+									"type": "PipelineReference"
+								},
 								"waitOnCompletion": true,
 								"parameters": {
 									"Para_PipelineRunId": {
 										"value": "@pipeline().RunId",
 										"type": "Expression"
 									},
-									"Para_JobStage": {
-										"value": "DW STEP10 AC_PL_NoEnrichedRecordsFound - AC_IF_NoEnrichedRecordFound (TRUE)\n\n",
-										"type": "Expression"
-									},
-									"Para_ErrorSeverity": {
-										"value": "AC_IF_NoEnrichment - Critical",
-										"type": "Expression"
-									},
-									"Para_ErrorProgramUnitName": {
+									"Para_ProgramUnitName": {
 										"value": "@pipeline().Pipeline",
 										"type": "Expression"
 									},
-									"Para_ErrorMessage": {
-										"value": "AC_LA_LookupEnrichedDataSet - Found no qualifed rows for enrichment\n",
+									"Para_JobStatus": {
+										"value": "Succeeded",
+										"type": "Expression"
+									},
+									"Para_Comments": {
+										"value": "@concat('STEP 4 AC_SCR_SLIPMetaDBStructure - No qualified curated record set to enrich')",
+										"type": "Expression"
+									},
+									"Para_JobStage": {
+										"value": "Gold Stage",
+										"type": "Expression"
+									},
+									"Para_TargetEnv": {
+										"value": "@pipeline().globalParameters.vGlobalEnv",
 										"type": "Expression"
 									}
 								}
