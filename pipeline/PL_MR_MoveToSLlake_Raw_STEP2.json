@@ -7,7 +7,7 @@
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "AC_SV_SetMonthValue",
+						"activity": "AC_SV_SetDateValue",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -133,7 +133,7 @@
 											"type": "Expression"
 										},
 										"vPath": {
-											"value": "@concat(pipeline().globalParameters.vGlobalBronze,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',item().DataSetName,'/')\n\n",
+											"value": "@concat(pipeline().globalParameters.vGlobalBronze,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
 											"type": "Expression"
 										},
 										"vDataSet": {
@@ -318,6 +318,30 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "AC_SV_SetDateValue",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "AC_SV_SetMonthValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vDate",
+					"value": {
+						"value": "@formatDateTime(utcnow(),'dd')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
@@ -328,6 +352,9 @@
 				"type": "String"
 			},
 			"vQtr": {
+				"type": "String"
+			},
+			"vDate": {
 				"type": "String"
 			}
 		},

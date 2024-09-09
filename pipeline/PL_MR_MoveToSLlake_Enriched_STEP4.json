@@ -3,17 +3,10 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "AC_QRY_PolarisDBStructure",
-				"description": "Pull configured POLARIS DW data sets for enrich process from POLARIS CRM",
+				"name": "AC_QRY_SLIPMetaDBStructure",
+				"description": "Pull configured SLIP Ingestion data sets to enrich aka SCD implementation.",
 				"type": "Script",
-				"dependsOn": [
-					{
-						"activity": "AC_SV_DataSetMasterTable",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -22,6 +15,10 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_sql",
+					"type": "LinkedServiceReference"
+				},
 				"typeProperties": {
 					"scripts": [
 						{
@@ -41,7 +38,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "AC_QRY_PolarisDBStructure",
+						"activity": "AC_QRY_SLIPMetaDBStructure",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -346,29 +343,11 @@
 				}
 			},
 			{
-				"name": "AC_SV_DataSetMasterTable",
-				"description": "Fully qualified name assembly to refer DATASETPROCESSMASTERTBL",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "vMetaSchemaProcessMstr",
-					"value": {
-						"value": "@concat(pipeline().globalParameters.vGlobalEnv,'_',pipeline().globalParameters.vGlobalMetaEngine,'.','DATASETPROCESSMASTERTBL')",
-						"type": "Expression"
-					}
-				}
-			},
-			{
 				"name": "AC_IF_NoEnrichedRecordsFound",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "AC_QRY_PolarisDBStructure",
+						"activity": "AC_QRY_SLIPMetaDBStructure",
 						"dependencyConditions": [
 							"Succeeded"
 						]
