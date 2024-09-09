@@ -3,36 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "AC_QRY_SLIPMetaDBStructur",
-				"description": "Pull configured SLIP Ingestion data sets to enrich aka SCD implementation.",
-				"type": "Script",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "ls_sql",
-					"type": "LinkedServiceReference"
-				},
-				"typeProperties": {
-					"scripts": [
-						{
-							"type": "NonQuery",
-							"text": {
-								"value": "\n\n",
-								"type": "Expression"
-							}
-						}
-					],
-					"scriptBlockExecutionTimeout": "02:00:00"
-				}
-			},
-			{
 				"name": "AC_FEA_EnrichDWPolarisDataSets",
 				"description": "Pull Polaris CRM Source DB structure for every configured DW data set.",
 				"type": "ForEach",
@@ -47,7 +17,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('AC_QRY_PolarisDBStructure').output.resultSets[0].rows\n",
+						"value": "@activity('AC_SCR_SLIPMetaDBStructure').output.resultSets[0].rows\n",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -356,7 +326,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(activity('AC_QRY_PolarisDBStructure').output.resultSetCount,0)\n\n",
+						"value": "@equals(activity('AC_SCR_SLIPMetaDBStructure').output.resultSetCount,0)\n",
 						"type": "Expression"
 					},
 					"ifTrueActivities": [
