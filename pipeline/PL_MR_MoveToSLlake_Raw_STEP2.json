@@ -214,6 +214,42 @@
 									}
 								}
 							}
+						},
+						{
+							"name": "AC_SC_UpdatePrevRunStatus",
+							"type": "Script",
+							"dependsOn": [
+								{
+									"activity": "AC_PL_AuditTrace",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "ls_sql",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "@concat('UPDATE [MetaDataEngine].[DataSetProcessMasterTbl] SET DataSetPreviousRunStatus = ','''RAW SUCCESS''',' WHERE DataSetName = ','''',item().DataSetName,'''')",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
 						}
 					]
 				}
