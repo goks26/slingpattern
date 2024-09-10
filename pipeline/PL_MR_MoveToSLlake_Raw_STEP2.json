@@ -243,7 +243,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "@concat('UPDATE [MetaDataEngine].[DataSetProcessMasterTbl] SET DataSetPreviousRunStatus = ','''RAW SUCCESS''',' , MetaDataSetCreatedDateTime =  ','',' WHERE DataSetName = ','''',item().DataSetName,'''')",
+											"value": "@concat('UPDATE [MetaDataEngine].[DataSetProcessMasterTbl] SET DataSetPreviousRunStatus = ','''RAW SUCCESS''',' , MetaDataSetCreatedDateTime =  ','''',variables('vTimeStamp'),'''',' WHERE DataSetName = ','''',item().DataSetName,'''')",
 											"type": "Expression"
 										}
 									}
