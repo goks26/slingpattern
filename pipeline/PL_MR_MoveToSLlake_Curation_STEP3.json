@@ -220,7 +220,7 @@
 							"type": "Script",
 							"dependsOn": [
 								{
-									"activity": "AC_PL_AuditTrace",
+									"activity": "AC_SV_TimeStamp",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -249,6 +249,30 @@
 									}
 								],
 								"scriptBlockExecutionTimeout": "02:00:00"
+							}
+						},
+						{
+							"name": "AC_SV_TimeStamp",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "AC_PL_AuditTrace",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "vTimeStamp",
+								"value": {
+									"value": "@utcNow('yyyy-MM-ddTHH:mm:ss')",
+									"type": "Expression"
+								}
 							}
 						}
 					]
@@ -355,6 +379,9 @@
 				"type": "String"
 			},
 			"vDate": {
+				"type": "String"
+			},
+			"vTimeStamp": {
 				"type": "String"
 			}
 		},
