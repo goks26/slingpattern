@@ -23,290 +23,73 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "AC_QRY_QueryToGetPrimaryKey",
-							"description": "Pull configured POLARIS DW data sets Primary key details from POLARIS CRM",
-							"type": "Script",
+							"name": "AC_PL_MR_DML_INSERT_DWEnriched_STEP11_DWConfigPkey_copy1",
+							"description": "Enriched Pipeline - Step 11 as a child from the DW config primary key",
+							"type": "ExecutePipeline",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
 								"secureInput": false
 							},
 							"userProperties": [],
-							"linkedServiceName": {
-								"referenceName": "ls_sql",
-								"type": "LinkedServiceReference"
-							},
 							"typeProperties": {
-								"scripts": [
-									{
-										"parameters": [
-											{
-												"name": "Table",
-												"type": "String",
-												"value": {
-													"value": "@item().TABLE_NAME",
-													"type": "Expression"
-												},
-												"direction": "Input"
-											},
-											{
-												"name": "Schema",
-												"type": "String",
-												"value": {
-													"value": "@item().SCHEMA_NAME",
-													"type": "Expression"
-												},
-												"direction": "Input"
-											}
-										],
-										"type": "Query",
-										"text": "select C.COLUMN_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS T\nJOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE C\nON C.CONSTRAINT_NAME = T.CONSTRAINT_NAME\nWHERE C.TABLE_NAME = @Table AND C.TABLE_SCHEMA = @Schema AND (T.CONSTRAINT_TYPE = 'PRIMARY KEY' OR T.CONSTRAINT_TYPE = 'UNIQUE');\n"
+								"pipeline": {
+									"referenceName": "PL_CH_MoveToSLlake_Enriched_STEP4",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"PrimaryKey": {
+										"value": "@item().DATASETPRIMARYKEY",
+										"type": "Expression"
+									},
+									"ColumnNames": {
+										"value": "@item().DATASETDESCRIPTION",
+										"type": "Expression"
+									},
+									"TableName": {
+										"value": "@item().TABLE_NAME",
+										"type": "Expression"
+									},
+									"SchemaName": {
+										"value": "@item().SCHEMA_NAME",
+										"type": "Expression"
 									}
-								],
-								"scriptBlockExecutionTimeout": "02:00:00"
+								}
 							}
 						},
 						{
-							"name": "AC_IF_PolarisPrimaryKeyFound",
-							"type": "IfCondition",
-							"dependsOn": [
-								{
-									"activity": "AC_QRY_QueryToGetPrimaryKey",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"name": "AC_PL_MR_DML_INSERT_DWEnriched_STEP11_copy1",
+							"description": "Call Enriched Pipeline - Step 11 as a child",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
 							"userProperties": [],
 							"typeProperties": {
-								"expression": {
-									"value": "@greater(activity('AC_QRY_QueryToGetPrimaryKey').output.resultSetCount,0)\n\n",
-									"type": "Expression"
+								"pipeline": {
+									"referenceName": "PL_CH_MoveToSLlake_Enriched_STEP4",
+									"type": "PipelineReference"
 								},
-								"ifFalseActivities": [
-									{
-										"name": "AC_SV_InvalidPolarisDS",
-										"type": "SetVariable",
-										"dependsOn": [],
-										"policy": {
-											"secureOutput": false,
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"variableName": "vErrorMsg",
-											"value": {
-												"value": "@concat(item().SCHEMA_NAME,'.',item().TABLE_NAME, ' - No Primary key found in CRM Database. Hence using the Primary key supplied in DWConfig - ',item().DATASETPRIMARYKEY)",
-												"type": "Expression"
-											}
-										}
+								"waitOnCompletion": true,
+								"parameters": {
+									"PrimaryKey": {
+										"value": "@activity('AC_QRY_QueryToGetPrimaryKey').output.resultSets[0].rows[0].COLUMN_NAME",
+										"type": "Expression"
 									},
-									{
-										"name": "AC_PL_PolarisInvalidDSTrace",
-										"type": "ExecutePipeline",
-										"dependsOn": [
-											{
-												"activity": "AC_SV_InvalidPolarisDS",
-												"dependencyConditions": [
-													"Succeeded"
-												]
-											}
-										],
-										"policy": {
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"waitOnCompletion": true,
-											"parameters": {
-												"Para_PipelineRunId": {
-													"value": "@pipeline().RunId",
-													"type": "Expression"
-												},
-												"Para_JobStage": {
-													"value": "DW STEP10-AC_FEA_EnrichDWPolarisDataSets - No Primary Key found - AC_IF_PolarisPrimaryKeyFound (FALSE)",
-													"type": "Expression"
-												},
-												"Para_ErrorSeverity": {
-													"value": "@concat(item().TABLE_NAME,' - ',' DW STEP 10 AC_IF_PolarisPrimaryKeyFound False Acitity - Warning ')\n",
-													"type": "Expression"
-												},
-												"Para_ErrorProgramUnitName": {
-													"value": "@pipeline().Pipeline",
-													"type": "Expression"
-												},
-												"Para_ErrorMessage": {
-													"value": "@variables('vErrorMsg')",
-													"type": "Expression"
-												}
-											}
-										}
+									"ColumnNames": {
+										"value": "@item().DATASETDESCRIPTION",
+										"type": "Expression"
 									},
-									{
-										"name": "AC_PL_MR_DML_INSERT_DWEnriched_STEP11_DWConfigPkey",
-										"description": "Enriched Pipeline - Step 11 as a child from the DW config primary key",
-										"type": "ExecutePipeline",
-										"dependsOn": [
-											{
-												"activity": "AC_PL_PolarisInvalidDSTrace",
-												"dependencyConditions": [
-													"Succeeded"
-												]
-											}
-										],
-										"policy": {
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"pipeline": {
-												"referenceName": "PL_CH_MoveToSLlake_Enriched_STEP4",
-												"type": "PipelineReference"
-											},
-											"waitOnCompletion": true,
-											"parameters": {
-												"PrimaryKey": {
-													"value": "@item().DATASETPRIMARYKEY",
-													"type": "Expression"
-												},
-												"ColumnNames": {
-													"value": "@item().DATASETDESCRIPTION",
-													"type": "Expression"
-												},
-												"TableName": {
-													"value": "@item().TABLE_NAME",
-													"type": "Expression"
-												},
-												"SchemaName": {
-													"value": "@item().SCHEMA_NAME",
-													"type": "Expression"
-												}
-											}
-										}
+									"TableName": {
+										"value": "@item().TABLE_NAME",
+										"type": "Expression"
 									},
-									{
-										"name": "AC_PL_PolarisErrorTrace_NoPkey",
-										"type": "ExecutePipeline",
-										"dependsOn": [
-											{
-												"activity": "AC_PL_MR_DML_INSERT_DWEnriched_STEP11_DWConfigPkey",
-												"dependencyConditions": [
-													"Failed"
-												]
-											}
-										],
-										"policy": {
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"waitOnCompletion": true,
-											"parameters": {
-												"Para_PipelineRunId": {
-													"value": "@pipeline().RunId",
-													"type": "Expression"
-												},
-												"Para_JobStage": {
-													"value": "AC_PL_MR_DML_INSERT_DW Enriched_STEP10 Failed - AC_IF_PolarisPrimaryKeyFound (FALSE)",
-													"type": "Expression"
-												},
-												"Para_ErrorSeverity": {
-													"value": "AC_FEA_EnrichDWPolarisDataSets Fatal Error\n\n",
-													"type": "Expression"
-												},
-												"Para_ErrorProgramUnitName": {
-													"value": "@pipeline().Pipeline",
-													"type": "Expression"
-												},
-												"Para_ErrorMessage": {
-													"value": "@activity('AC_PL_MR_DML_INSERT_DWEnriched_STEP11_DWConfigPkey').Error.message",
-													"type": "Expression"
-												}
-											}
-										}
+									"SchemaName": {
+										"value": "@item().SCHEMA_NAME",
+										"type": "Expression"
 									}
-								],
-								"ifTrueActivities": [
-									{
-										"name": "AC_PL_MR_DML_INSERT_DWEnriched_STEP11",
-										"description": "Call Enriched Pipeline - Step 11 as a child",
-										"type": "ExecutePipeline",
-										"dependsOn": [],
-										"policy": {
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"pipeline": {
-												"referenceName": "PL_CH_MoveToSLlake_Enriched_STEP4",
-												"type": "PipelineReference"
-											},
-											"waitOnCompletion": true,
-											"parameters": {
-												"PrimaryKey": {
-													"value": "@activity('AC_QRY_QueryToGetPrimaryKey').output.resultSets[0].rows[0].COLUMN_NAME",
-													"type": "Expression"
-												},
-												"ColumnNames": {
-													"value": "@item().DATASETDESCRIPTION",
-													"type": "Expression"
-												},
-												"TableName": {
-													"value": "@item().TABLE_NAME",
-													"type": "Expression"
-												},
-												"SchemaName": {
-													"value": "@item().SCHEMA_NAME",
-													"type": "Expression"
-												}
-											}
-										}
-									},
-									{
-										"name": "AC_PL_PolarisErrorTrace",
-										"type": "ExecutePipeline",
-										"dependsOn": [
-											{
-												"activity": "AC_PL_MR_DML_INSERT_DWEnriched_STEP11",
-												"dependencyConditions": [
-													"Failed"
-												]
-											}
-										],
-										"policy": {
-											"secureInput": false
-										},
-										"userProperties": [],
-										"typeProperties": {
-											"waitOnCompletion": true,
-											"parameters": {
-												"Para_PipelineRunId": {
-													"value": "@pipeline().RunId",
-													"type": "Expression"
-												},
-												"Para_JobStage": {
-													"value": "AC_PL_MR_DML_INSERT_DW Enriched_STEP10 Failed - AC_IF_PolarisPrimaryKeyFound",
-													"type": "Expression"
-												},
-												"Para_ErrorSeverity": {
-													"value": "AC_FEA_EnrichDWPolarisDataSets Fatal Error\n\n",
-													"type": "Expression"
-												},
-												"Para_ErrorProgramUnitName": {
-													"value": "@pipeline().Pipeline",
-													"type": "Expression"
-												},
-												"Para_ErrorMessage": {
-													"value": "@activity('AC_PL_MR_DML_INSERT_DWEnriched_STEP11').Error.message",
-													"type": "Expression"
-												}
-											}
-										}
-									}
-								]
+								}
 							}
 						}
 					]
