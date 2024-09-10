@@ -91,6 +91,80 @@
 									}
 								}
 							}
+						},
+						{
+							"name": "AC_PL_PolarisErrorTrace",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "AC_DF_PolarisDWEnriched_SCD2",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"waitOnCompletion": true
+							}
+						},
+						{
+							"name": "AC_DF_PolarisDWEnriched_SCD2",
+							"description": "Maintain One history record and One active record",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DF_CH_MoveToSLlake_Enriched_STEP4",
+									"type": "DataFlowReference",
+									"parameters": {
+										"PrimaryKey": {
+											"value": "'@{toUpper(pipeline().parameters.PrimaryKey)}'",
+											"type": "Expression"
+										},
+										"Columns": {
+											"value": "'@{toUpper(pipeline().parameters.ColumnNames)}'",
+											"type": "Expression"
+										}
+									}
+								},
+								"compute": {
+									"coreCount": 32,
+									"computeType": "MemoryOptimized"
+								},
+								"traceLevel": "Coarse"
+							}
+						},
+						{
+							"name": "AC_PL_PolarisAuditInsert",
+							"description": "Capture the audit events",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "AC_DF_PolarisDWEnriched_SCD2",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"waitOnCompletion": true
+							}
 						}
 					]
 				}
@@ -179,7 +253,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "SELECT DataSetSource, DataSetName,DataSetQuery \nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetTransformation = 'Y' AND DataSetPreviousRunStatus = 'CUR SUCCESS'"
+							"text": "SELECT DataSetSource, DataSetName,DataSetQuery,DataSetPrimaryKey\nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetTransformation = 'Y' AND DataSetPreviousRunStatus = 'CUR SUCCESS'"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"

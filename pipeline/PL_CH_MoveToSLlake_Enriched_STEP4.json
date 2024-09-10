@@ -142,38 +142,6 @@
 											"value": "'@{toUpper(pipeline().parameters.ColumnNames)}'",
 											"type": "Expression"
 										}
-									},
-									"datasetParameters": {
-										"CuratedInput": {
-											"Curated_Schema": {
-												"value": "@replace(item().TABLE_SCHEMA,pipeline().globalParameters.vGlobalEnriched,pipeline().globalParameters.vGlobalCurated)",
-												"type": "Expression"
-											},
-											"Curated_Table": {
-												"value": "@replace(item().TABLE_NAME,pipeline().globalParameters.vGlobalEnrichedDS,pipeline().globalParameters.vGlobalCuratedDS)",
-												"type": "Expression"
-											}
-										},
-										"ExistingDimensionTable": {
-											"Enriched_Schema": {
-												"value": "@item().TABLE_SCHEMA\n\n",
-												"type": "Expression"
-											},
-											"Enriched_Table": {
-												"value": "@item().TABLE_NAME",
-												"type": "Expression"
-											}
-										},
-										"DimensionTableSink": {
-											"Enriched_Schema": {
-												"value": "@item().TABLE_SCHEMA",
-												"type": "Expression"
-											},
-											"Enriched_Table": {
-												"value": "@item().TABLE_NAME",
-												"type": "Expression"
-											}
-										}
 									}
 								},
 								"compute": {
