@@ -130,7 +130,7 @@
 									"type": "DataFlowReference",
 									"parameters": {
 										"PrimaryKey": {
-											"value": "'@{toUpper(pipeline().parameters.PrimaryKey)}'",
+											"value": "'@{item().DataSetPrimaryKey}'",
 											"type": "Expression"
 										},
 										"Columns": {
