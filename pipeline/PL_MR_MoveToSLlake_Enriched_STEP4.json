@@ -114,6 +114,10 @@
 									"Para_ProgramUnitName": {
 										"value": "@pipeline().Pipeline",
 										"type": "Expression"
+									},
+									"Para_JobStatus": {
+										"value": "Succeeded",
+										"type": "Expression"
 									}
 								}
 							}
