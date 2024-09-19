@@ -23,7 +23,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "AC_PL_PolarisErrorTrace",
+							"name": "AC_PL_ErrorTrace",
 							"type": "ExecutePipeline",
 							"dependsOn": [
 								{
@@ -38,6 +38,10 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_DML_INSERT_SLIPError",
+									"type": "PipelineReference"
+								},
 								"waitOnCompletion": true
 							}
 						},
@@ -77,7 +81,7 @@
 							}
 						},
 						{
-							"name": "AC_PL_PolarisAuditInsert",
+							"name": "AC_PL_AuditTrace",
 							"description": "Capture the audit events",
 							"type": "ExecutePipeline",
 							"dependsOn": [
@@ -93,6 +97,10 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_DML_INSERT_SLIPAudit",
+									"type": "PipelineReference"
+								},
 								"waitOnCompletion": true
 							}
 						}
