@@ -118,6 +118,14 @@
 									"Para_JobStatus": {
 										"value": "Succeeded",
 										"type": "Expression"
+									},
+									"Para_JobStage": {
+										"value": "Gold Stage Creation - SCD",
+										"type": "Expression"
+									},
+									"Para_TargetEnv": {
+										"value": "@pipeline().globalParameters.vGlobalEnv",
+										"type": "Expression"
 									}
 								}
 							}
