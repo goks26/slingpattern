@@ -97,7 +97,7 @@
 							"type": "ExecutePipeline",
 							"dependsOn": [
 								{
-									"activity": "AC_DF_PolarisDWEnriched_SCD2",
+									"activity": "AC_DF_SLIPEnriched_SCD2",
 									"dependencyConditions": [
 										"Failed"
 									]
@@ -112,7 +112,7 @@
 							}
 						},
 						{
-							"name": "AC_DF_PolarisDWEnriched_SCD2",
+							"name": "AC_DF_SLIPEnriched_SCD2",
 							"description": "Maintain One history record and One active record",
 							"type": "ExecuteDataFlow",
 							"dependsOn": [],
@@ -134,7 +134,7 @@
 											"type": "Expression"
 										},
 										"Columns": {
-											"value": "'@{toUpper(pipeline().parameters.ColumnNames)}'",
+											"value": "'@{item().DataSetHistoryItems}'",
 											"type": "Expression"
 										}
 									}
@@ -152,7 +152,7 @@
 							"type": "ExecutePipeline",
 							"dependsOn": [
 								{
-									"activity": "AC_DF_PolarisDWEnriched_SCD2",
+									"activity": "AC_DF_SLIPEnriched_SCD2",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -253,7 +253,7 @@
 					"scripts": [
 						{
 							"type": "Query",
-							"text": "SELECT DataSetSource, DataSetName,DataSetQuery,DataSetPrimaryKey\nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetTransformation = 'Y' AND DataSetPreviousRunStatus = 'CUR SUCCESS'"
+							"text": "SELECT DataSetSource, DataSetName,DataSetQuery,DataSetPrimaryKey,DataSetHistoryItems\nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetHistoryFlag = 'Y' AND DataSetPreviousRunStatus = 'CUR SUCCESS'"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
