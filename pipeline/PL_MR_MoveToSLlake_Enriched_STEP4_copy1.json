@@ -1,5 +1,5 @@
 {
-	"name": "PL_MR_MoveToSLlake_Enriched_STEP4",
+	"name": "PL_MR_MoveToSLlake_Enriched_STEP4_copy1",
 	"properties": {
 		"activities": [
 			{
@@ -22,6 +22,76 @@
 					},
 					"isSequential": true,
 					"activities": [
+						{
+							"name": "AC_PL_MR_DML_INSERT_DWEnriched_STEP11_DWConfigPkey_copy1",
+							"description": "Enriched Pipeline - Step 11 as a child from the DW config primary key",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_MoveToSLlake_Enriched_STEP4",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"PrimaryKey": {
+										"value": "@item().DATASETPRIMARYKEY",
+										"type": "Expression"
+									},
+									"ColumnNames": {
+										"value": "@item().DATASETDESCRIPTION",
+										"type": "Expression"
+									},
+									"TableName": {
+										"value": "@item().TABLE_NAME",
+										"type": "Expression"
+									},
+									"SchemaName": {
+										"value": "@item().SCHEMA_NAME",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "AC_PL_MR_DML_INSERT_DWEnriched_STEP11_copy1",
+							"description": "Call Enriched Pipeline - Step 11 as a child",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PL_CH_MoveToSLlake_Enriched_STEP4",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"PrimaryKey": {
+										"value": "@activity('AC_QRY_QueryToGetPrimaryKey').output.resultSets[0].rows[0].COLUMN_NAME",
+										"type": "Expression"
+									},
+									"ColumnNames": {
+										"value": "@item().DATASETDESCRIPTION",
+										"type": "Expression"
+									},
+									"TableName": {
+										"value": "@item().TABLE_NAME",
+										"type": "Expression"
+									},
+									"SchemaName": {
+										"value": "@item().SCHEMA_NAME",
+										"type": "Expression"
+									}
+								}
+							}
+						},
 						{
 							"name": "AC_PL_PolarisErrorTrace",
 							"type": "ExecutePipeline",
@@ -200,9 +270,6 @@
 			"vOutputMsg": {
 				"type": "String"
 			}
-		},
-		"folder": {
-			"name": "PL_SLIngestionPattern/SLIPIngestionLayers"
 		},
 		"annotations": []
 	}
