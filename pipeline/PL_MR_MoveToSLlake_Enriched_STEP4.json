@@ -101,7 +101,21 @@
 									"referenceName": "PL_CH_DML_INSERT_SLIPAudit",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"Para_PipelineRunId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"Para_DatasetId": {
+										"value": "7777",
+										"type": "Expression"
+									},
+									"Para_ProgramUnitName": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									}
+								}
 							}
 						}
 					]
