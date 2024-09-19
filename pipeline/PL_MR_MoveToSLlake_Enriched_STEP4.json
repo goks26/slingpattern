@@ -42,7 +42,25 @@
 									"referenceName": "PL_CH_DML_INSERT_SLIPError",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"Para_PipelineRunId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"Para_JobStage": {
+										"value": "Gold Stage Creation - SCD",
+										"type": "Expression"
+									},
+									"Para_ErrorSeverity": {
+										"value": "Critical",
+										"type": "Expression"
+									},
+									"Para_ErrorProgramUnitName": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									}
+								}
 							}
 						},
 						{
