@@ -1,0 +1,36 @@
+{
+	"name": "DS_SLIPLakeIngestion_CSV_copy2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sling_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_SLIngestionPattern"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "SAP_employee_CURATED.csv",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "Gold/SAP/2024Q3/Sep/09/SAP.employee",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "dev-slip-semslake",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
