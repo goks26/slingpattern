@@ -21,31 +21,19 @@
 						"additionalColumns": [
 							{
 								"name": "SurKey",
-								"value": {
-									"value": "1",
-									"type": "Expression"
-								}
+								"value": ""
 							},
 							{
 								"name": "SCDActive",
-								"value": {
-									"value": "Y",
-									"type": "Expression"
-								}
+								"value": ""
 							},
 							{
 								"name": "SCDActiveStartTime",
-								"value": {
-									"value": "@utcNow()",
-									"type": "Expression"
-								}
+								"value": ""
 							},
 							{
 								"name": "SCDEndTime",
-								"value": {
-									"value": "NULL",
-									"type": "Expression"
-								}
+								"value": ""
 							}
 						],
 						"storeSettings": {
