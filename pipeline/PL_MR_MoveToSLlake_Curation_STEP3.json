@@ -335,7 +335,7 @@
 									"parameters": {
 										"vEnv": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)",
 										"vPath": {
-											"value": "@concat(pipeline().globalParameters.vGlobalBronze,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
+											"value": "@concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
 											"type": "Expression"
 										},
 										"vDataSet": {
