@@ -13,10 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "SAP_employee_CURATED.csv",
-					"type": "Expression"
-				},
 				"folderPath": {
 					"value": "Gold/SAP/2024Q3/Sep/09/SAP.employee",
 					"type": "Expression"
