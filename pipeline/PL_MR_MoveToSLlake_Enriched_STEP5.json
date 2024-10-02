@@ -111,11 +111,11 @@
 												"type": "Expression"
 											},
 											"vPath": {
-												"value": "@concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
+												"value": "@concat(pipeline().globalParameters.vGlobalGold,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
 												"type": "Expression"
 											},
 											"vDataSet": {
-												"value": "@concat(replace(item().DataSetName,'.','_'),'_CURATED.csv')",
+												"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')",
 												"type": "Expression"
 											}
 										},
