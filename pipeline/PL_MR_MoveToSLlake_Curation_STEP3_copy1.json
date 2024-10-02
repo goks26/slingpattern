@@ -1,5 +1,5 @@
 {
-	"name": "PL_MR_MoveToSLlake_Curation_STEP3",
+	"name": "PL_MR_MoveToSLlake_Curation_STEP3_copy1",
 	"properties": {
 		"activities": [
 			{
@@ -276,9 +276,9 @@
 							}
 						},
 						{
-							"name": "AC_DF_EnrichedStructure",
-							"description": "Add required enriched data structure to curated data set",
-							"type": "ExecuteDataFlow",
+							"name": "AC_Copy_EnrichReady",
+							"description": "Get the basic curated data set ready for enrichment",
+							"type": "Copy",
 							"dependsOn": [
 								{
 									"activity": "AC_SC_UpdatePrevRunStatus",
@@ -287,6 +287,89 @@
 									]
 								}
 							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_SLIPLakeIngestion_CSV",
+									"type": "DatasetReference",
+									"parameters": {
+										"vEnv": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)",
+										"vPath": {
+											"value": "@concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
+											"type": "Expression"
+										},
+										"vDataSet": {
+											"value": "@concat(replace(item().DataSetName,'.','_'),'_CURATED.csv')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_SLIPLakeIngestion_CSV",
+									"type": "DatasetReference",
+									"parameters": {
+										"vEnv": {
+											"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)\n\n",
+											"type": "Expression"
+										},
+										"vPath": {
+											"value": "@concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
+											"type": "Expression"
+										},
+										"vDataSet": {
+											"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')\n\n",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "Data flow1",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -446,9 +529,6 @@
 			"vTimeStamp": {
 				"type": "String"
 			}
-		},
-		"folder": {
-			"name": "PL_SLIngestionPattern/SLIPIngestionLayers"
 		},
 		"annotations": []
 	}
