@@ -126,7 +126,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "DF_CH_MoveToSLlake_Enriched_STEP4",
+									"referenceName": "DF_CH_MoveToSLlake_Enriched_STEP6",
 									"type": "DataFlowReference",
 									"parameters": {
 										"PrimaryKey": {
