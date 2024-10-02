@@ -42,7 +42,7 @@
 				"          SCDEndTime = \"\") ~> AddSCDFields",
 				"AddSCDFields sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:[''],",
+				"     partitionFileNames:[($vSinkFile)],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     partitionBy('hash', 1)) ~> SnkEnrichedDataSets"
