@@ -61,7 +61,7 @@
 										"type": "Expression"
 									},
 									"Para_ErrorMessage": {
-										"value": "@activity('AC_DF_SLIPEnriched_SCD2').output.Error.message",
+										"value": "@activity('AC_DF_SLIPEnriched_SCD2').Error.message",
 										"type": "Expression"
 									}
 								}
