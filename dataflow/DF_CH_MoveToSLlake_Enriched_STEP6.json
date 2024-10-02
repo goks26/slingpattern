@@ -28,7 +28,8 @@
 						"referenceName": "DS_SLIPLakeIngestion_CSV",
 						"type": "DatasetReference"
 					},
-					"name": "DimensionTableSink"
+					"name": "DimensionTableSink",
+					"description": "Complete the enrich (Gold layer) with SCD details."
 				}
 			],
 			"transformations": [
