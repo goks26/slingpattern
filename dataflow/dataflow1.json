@@ -30,6 +30,11 @@
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     vEnv_DF as string,",
+				"     vPath_DF as string,",
+				"     vDataSet_DF as string",
+				"}",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
