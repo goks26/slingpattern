@@ -92,6 +92,10 @@
 										"Columns": {
 											"value": "'@{item().DataSetHistoryItems}'",
 											"type": "Expression"
+										},
+										"vSinkFile": {
+											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')}'",
+											"type": "Expression"
 										}
 									},
 									"datasetParameters": {
