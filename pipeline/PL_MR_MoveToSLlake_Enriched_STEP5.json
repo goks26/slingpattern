@@ -105,6 +105,20 @@
 												"type": "Expression"
 											}
 										},
+										"ExistingDimensionTable": {
+											"vEnv": {
+												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)",
+												"type": "Expression"
+											},
+											"vPath": {
+												"value": "@concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
+												"type": "Expression"
+											},
+											"vDataSet": {
+												"value": "@concat(replace(item().DataSetName,'.','_'),'_CURATED.csv')",
+												"type": "Expression"
+											}
+										},
 										"DimensionTableSink": {
 											"vEnv": {
 												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)\n",
