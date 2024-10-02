@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DS_SLIPLakeIngestion_CSV_copy1",
+						"referenceName": "DS_SLIPLakeIngestion_CSV",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_SLIPLakeIngestion_CSV_copy2",
+						"referenceName": "DS_SLIPLakeIngestion_CSV",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -30,11 +30,6 @@
 				}
 			],
 			"scriptLines": [
-				"parameters{",
-				"     vEnv_DF as string,",
-				"     vPath_DF as string,",
-				"     vDataSet_DF as string",
-				"}",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",

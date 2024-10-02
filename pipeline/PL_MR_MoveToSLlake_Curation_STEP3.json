@@ -381,21 +381,7 @@
 							"typeProperties": {
 								"dataflow": {
 									"referenceName": "dataflow1",
-									"type": "DataFlowReference",
-									"parameters": {
-										"vEnv_DF": {
-											"value": "'@{concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)}'",
-											"type": "Expression"
-										},
-										"vPath_DF": {
-											"value": "'@{concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')}'",
-											"type": "Expression"
-										},
-										"vDataSet_DF": {
-											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_CURATED.csv')}'",
-											"type": "Expression"
-										}
-									}
+									"type": "DataFlowReference"
 								},
 								"compute": {
 									"coreCount": 8,
