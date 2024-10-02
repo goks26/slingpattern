@@ -53,11 +53,15 @@
 										"type": "Expression"
 									},
 									"Para_ErrorSeverity": {
-										"value": "Critical",
+										"value": "@concat(' Critical - Dataset - ',item().DataSetName)",
 										"type": "Expression"
 									},
 									"Para_ErrorProgramUnitName": {
 										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"Para_ErrorMessage": {
+										"value": "@activity('AC_DF_SLIPEnriched_SCD2').output.Error.message",
 										"type": "Expression"
 									}
 								}
@@ -179,6 +183,30 @@
 									},
 									"Para_JobStatus": {
 										"value": "Succeeded",
+										"type": "Expression"
+									},
+									"Para_ProcessedRecordCount": {
+										"value": "@activity('AC_DF_SLIPEnriched_SCD2').output.runStatus.metrics.DimensionTableSink.rowsWritten",
+										"type": "Expression"
+									},
+									"Para_RejectedRecordCount": {
+										"value": "0",
+										"type": "Expression"
+									},
+									"Para_Comments": {
+										"value": "@concat(' Sucessful completion - Dataset - ',item().DataSetName)",
+										"type": "Expression"
+									},
+									"Para_SizeOfDataRead": {
+										"value": "NULL",
+										"type": "Expression"
+									},
+									"Para_SizeOfDataWritten": {
+										"value": "NULL",
+										"type": "Expression"
+									},
+									"Para_Duration": {
+										"value": "@activity('AC_DF_SLIPEnriched_SCD2').Duration",
 										"type": "Expression"
 									},
 									"Para_JobStage": {
