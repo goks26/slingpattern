@@ -248,7 +248,14 @@
 				"name": "AC_SCR_SLIPMetaDBStructure",
 				"description": "Pull configured SLIP Ingestion data sets to enrich aka SCD implementation.",
 				"type": "Script",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "AC_SV_SetDateValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -270,16 +277,117 @@
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
 				}
+			},
+			{
+				"name": "AC_SV_SetQtrValue",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vQtr",
+					"value": {
+						"value": "@if(equals(formatDateTime(utcnow(),'MM'),'01'),'Q1',\n if(equals(formatDateTime(utcnow(),'MM'),'02'),'Q1',\n if(equals(formatDateTime(utcnow(),'MM'),'03'),'Q1',\n if(equals(formatDateTime(utcnow(),'MM'),'04'),'Q2',\n if(equals(formatDateTime(utcnow(),'MM'),'05'),'Q2',\n if(equals(formatDateTime(utcnow(),'MM'),'06'),'Q2',\n if(equals(formatDateTime(utcnow(),'MM'),'07'),'Q3',\n if(equals(formatDateTime(utcnow(),'MM'),'08'),'Q3',\n if(equals(formatDateTime(utcnow(),'MM'),'09'),'Q3',\n if(equals(formatDateTime(utcnow(),'MM'),'10'),'Q4',\n if(equals(formatDateTime(utcnow(),'MM'),'11'),'Q4',\n if(equals(formatDateTime(utcnow(),'MM'),'12'),'Q4','NA'))))))))))))\n\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "AC_SV_SetYearValue",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "AC_SV_SetQtrValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vYear",
+					"value": {
+						"value": "@formatDateTime(utcnow(),'yyyy')\n\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "AC_SV_SetMonthValue",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "AC_SV_SetYearValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vMonth",
+					"value": {
+						"value": "@formatDateTime(utcnow(),'MMM')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "AC_SV_SetDateValue",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "AC_SV_SetMonthValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "vDate",
+					"value": {
+						"value": "@formatDateTime(utcnow(),'dd')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
-			"vMetaSchemaProcessMstr": {
-				"type": "String"
-			},
 			"vErrorMsg": {
 				"type": "String"
 			},
 			"vOutputMsg": {
+				"type": "String"
+			},
+			"vYear": {
+				"type": "String"
+			},
+			"vMonth": {
+				"type": "String"
+			},
+			"vQtr": {
+				"type": "String"
+			},
+			"vDate": {
+				"type": "String"
+			},
+			"vTimeStamp": {
 				"type": "String"
 			}
 		},
