@@ -297,10 +297,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "dataflow1",
+									"referenceName": "DF_CH_CreatEnrichedStructure_STEP4",
 									"type": "DataFlowReference",
 									"datasetParameters": {
-										"source1": {
+										"SrcCuratedDataSets": {
 											"vEnv": {
 												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)",
 												"type": "Expression"
@@ -314,7 +314,7 @@
 												"type": "Expression"
 											}
 										},
-										"sink1": {
+										"SnkEnrichedDataSets": {
 											"vEnv": {
 												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)\n",
 												"type": "Expression"

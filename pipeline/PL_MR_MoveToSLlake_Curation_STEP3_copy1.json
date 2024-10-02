@@ -380,38 +380,8 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "dataflow1",
-									"type": "DataFlowReference",
-									"datasetParameters": {
-										"source1": {
-											"vEnv": {
-												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)",
-												"type": "Expression"
-											},
-											"vPath": {
-												"value": "@concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
-												"type": "Expression"
-											},
-											"vDataSet": {
-												"value": "@concat(replace(item().DataSetName,'.','_'),'_CURATED.csv')",
-												"type": "Expression"
-											}
-										},
-										"sink1": {
-											"vEnv": {
-												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)\n",
-												"type": "Expression"
-											},
-											"vPath": {
-												"value": "@concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
-												"type": "Expression"
-											},
-											"vDataSet": {
-												"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')\n",
-												"type": "Expression"
-											}
-										}
-									}
+									"referenceName": "DF_CH_CreatEnrichedStructure_STEP4",
+									"type": "DataFlowReference"
 								},
 								"compute": {
 									"coreCount": 32,

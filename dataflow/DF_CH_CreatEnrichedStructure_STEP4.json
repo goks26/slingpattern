@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "DF_CH_CreatEnrichedStructure_STEP4",
 	"properties": {
 		"folder": {
 			"name": "SLIPSCD_Enriched"
@@ -12,7 +12,7 @@
 						"referenceName": "DS_SLIPLakeIngestion_CSV",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "SrcCuratedDataSets"
 				}
 			],
 			"sinks": [
@@ -21,26 +21,26 @@
 						"referenceName": "DS_SLIPLakeIngestion_CSV",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "SnkEnrichedDataSets"
 				}
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "AddSCDFields"
 				}
 			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(SurKey = \"\",",
+				"     ignoreNoFilesFound: false) ~> SrcCuratedDataSets",
+				"SrcCuratedDataSets derive(SurKey = \"\",",
 				"          SCDActive = \"\",",
 				"          SCDActiveStartTime = \"\",",
-				"          SCDEndTime = \"\") ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          SCDEndTime = \"\") ~> AddSCDFields",
+				"AddSCDFields sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> SnkEnrichedDataSets"
 			]
 		}
 	}
