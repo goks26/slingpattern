@@ -299,6 +299,12 @@
 								"dataflow": {
 									"referenceName": "DF_CH_CreatEnrichedStructure_STEP4",
 									"type": "DataFlowReference",
+									"parameters": {
+										"vSinkFile": {
+											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')\n}'",
+											"type": "Expression"
+										}
+									},
 									"datasetParameters": {
 										"SrcCuratedDataSets": {
 											"vEnv": {
@@ -320,7 +326,7 @@
 												"type": "Expression"
 											},
 											"vPath": {
-												"value": "@concat(pipeline().globalParameters.vGlobalGold,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
+												"value": "@concat(pipeline().globalParameters.vGlobalSilver,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
 												"type": "Expression"
 											},
 											"vDataSet": {
