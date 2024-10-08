@@ -126,20 +126,6 @@
 												"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')",
 												"type": "Expression"
 											}
-										},
-										"DimensionTableSink": {
-											"vEnv": {
-												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)\n",
-												"type": "Expression"
-											},
-											"vPath": {
-												"value": "@concat(pipeline().globalParameters.vGlobalGold,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
-												"type": "Expression"
-											},
-											"vDataSet": {
-												"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')\n",
-												"type": "Expression"
-											}
 										}
 									}
 								},
