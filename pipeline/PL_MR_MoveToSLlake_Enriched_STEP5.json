@@ -196,11 +196,11 @@
 										"type": "Expression"
 									},
 									"Para_SizeOfDataRead": {
-										"value": "NULL",
+										"value": "0",
 										"type": "Expression"
 									},
 									"Para_SizeOfDataWritten": {
-										"value": "NULL",
+										"value": "0",
 										"type": "Expression"
 									},
 									"Para_Duration": {
