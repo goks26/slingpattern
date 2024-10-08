@@ -96,6 +96,10 @@
 										"vSinkFile": {
 											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')}'",
 											"type": "Expression"
+										},
+										"vContainerName": {
+											"value": "'@{concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)}'",
+											"type": "Expression"
 										}
 									},
 									"datasetParameters": {
