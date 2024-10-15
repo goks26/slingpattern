@@ -1,0 +1,21 @@
+{
+	"name": "DS_SLIPLakeIngestion_Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sling_blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DS_SLIngestionPattern"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
