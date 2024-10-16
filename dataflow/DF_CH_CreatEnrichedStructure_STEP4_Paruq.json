@@ -1,0 +1,53 @@
+{
+	"name": "DF_CH_CreatEnrichedStructure_STEP4_Paruq",
+	"properties": {
+		"folder": {
+			"name": "SLIPSCD_Enriched"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_SLIPLakeIngestion_CSV",
+						"type": "DatasetReference"
+					},
+					"name": "SrcCuratedDataSets"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SLIPLakeIngestion_Parquet",
+						"type": "DatasetReference"
+					},
+					"name": "SnkEnrichedDataSets"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddSCDFields"
+				}
+			],
+			"scriptLines": [
+				"parameters{",
+				"     vSinkFile as string",
+				"}",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SrcCuratedDataSets",
+				"SrcCuratedDataSets derive(SURKEY = \"\",",
+				"          SCDACTIVE = 1,",
+				"          SCDACTIVESTARTTIME = toString(currentTimestamp(), 'dd-MM-yyyy HH:mm:ss'),",
+				"          SCDACTIVEENDTIME = \"\") ~> AddSCDFields",
+				"AddSCDFields sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     partitionFileNames:[($vSinkFile)],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> SnkEnrichedDataSets"
+			]
+		}
+	}
+}
