@@ -82,30 +82,8 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "DF_CH_MoveToSLlake_Enriched_STEP6",
+									"referenceName": "DF_CH_MoveToSLlake_Enriched_STEP6_Paruq",
 									"type": "DataFlowReference",
-									"parameters": {
-										"PrimaryKey": {
-											"value": "'@{item().DataSetPrimaryKey}'",
-											"type": "Expression"
-										},
-										"Columns": {
-											"value": "'@{item().DataSetHistoryItems}'",
-											"type": "Expression"
-										},
-										"vSinkFile": {
-											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')}'",
-											"type": "Expression"
-										},
-										"vContainerName": {
-											"value": "'@{concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)}'",
-											"type": "Expression"
-										},
-										"vPath": {
-											"value": "'@{concat(pipeline().globalParameters.vGlobalGold,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')}'",
-											"type": "Expression"
-										}
-									},
 									"datasetParameters": {
 										"CuratedInput": {
 											"vEnv": {
