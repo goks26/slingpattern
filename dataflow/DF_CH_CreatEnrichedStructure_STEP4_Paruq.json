@@ -52,7 +52,7 @@
 				"     validateSchema: false,",
 				"     format: 'delta',",
 				"     container: ($vContainerName),",
-				"     folderPath: (concat($vPath,$vSinkFile)),",
+				"     folderPath: ($vPath),",
 				"     mergeSchema: false,",
 				"     autoCompact: false,",
 				"     optimizedWrite: false,",
