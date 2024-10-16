@@ -27,6 +27,9 @@
 			"transformations": [
 				{
 					"name": "AddSCDFields"
+				},
+				{
+					"name": "AlterRow1"
 				}
 			],
 			"scriptLines": [
@@ -43,9 +46,13 @@
 				"          SCDACTIVE = 1,",
 				"          SCDACTIVESTARTTIME = toString(currentTimestamp(), 'dd-MM-yyyy HH:mm:ss'),",
 				"          SCDACTIVEENDTIME = \"\") ~> AddSCDFields",
-				"AddSCDFields sink(allowSchemaDrift: true,",
+				"AddSCDFields alterRow(insertIf(true()),",
+				"     updateIf(true())) ~> AlterRow1",
+				"AlterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'delta',",
+				"     container: ($vContainerName),",
+				"     folderPath: (concat($vPath,$vSinkFile)),",
 				"     mergeSchema: false,",
 				"     autoCompact: false,",
 				"     optimizedWrite: false,",
@@ -57,8 +64,7 @@
 				"     keys:[($PrimaryKey)],",
 				"     partitionFileNames:[($vSinkFile)],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> SnkEnrichedDataSets"
+				"     skipDuplicateMapOutputs: true) ~> SnkEnrichedDataSets"
 			]
 		}
 	}
