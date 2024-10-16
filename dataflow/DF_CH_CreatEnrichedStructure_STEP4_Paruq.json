@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"linkedService": {
-						"referenceName": "ls_sling_blob",
+						"referenceName": "ls_sling_lake",
 						"type": "LinkedServiceReference"
 					},
 					"name": "SnkEnrichedDataSets"
@@ -51,7 +51,7 @@
 				"AlterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'delta',",
-				"     container: ($vContainerName),",
+				"     fileSystem: ($vContainerName),",
 				"     folderPath: ($vPath),",
 				"     mergeSchema: false,",
 				"     autoCompact: false,",
@@ -63,6 +63,9 @@
 				"     upsertable: false,",
 				"     keys:[($PrimaryKey)],",
 				"     partitionFileNames:[($vSinkFile)],",
+				"     umask: 0777,",
+				"     preCommands: [],",
+				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> SnkEnrichedDataSets"
 			]
