@@ -17,9 +17,9 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "DS_SLIPLakeIngestion_Parquet",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "ls_sling_blob",
+						"type": "LinkedServiceReference"
 					},
 					"name": "SnkEnrichedDataSets"
 				}
@@ -31,7 +31,10 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     vSinkFile as string",
+				"     vSinkFile as string,",
+				"     PrimaryKey as string,",
+				"     vContainerName as string,",
+				"     vPath as string",
 				"}",
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -42,7 +45,16 @@
 				"          SCDACTIVEENDTIME = \"\") ~> AddSCDFields",
 				"AddSCDFields sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     format: 'parquet',",
+				"     format: 'delta',",
+				"     mergeSchema: false,",
+				"     autoCompact: false,",
+				"     optimizedWrite: false,",
+				"     vacuum: 0,",
+				"     deletable: false,",
+				"     insertable: true,",
+				"     updateable: true,",
+				"     upsertable: false,",
+				"     keys:[($PrimaryKey)],",
 				"     partitionFileNames:[($vSinkFile)],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",

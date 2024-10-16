@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT DataSetSource, DataSetName,DataSetQuery \nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetTransformation = 'Y' AND DataSetPreviousRunStatus = 'RAW SUCCESS'",
+						"sqlReaderQuery": "SELECT DataSetSource, DataSetName,DataSetQuery,DataSetPrimaryKey\nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetTransformation = 'Y' AND DataSetPreviousRunStatus = 'RAW SUCCESS'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -303,6 +303,18 @@
 										"vSinkFile": {
 											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED.parquet')}'",
 											"type": "Expression"
+										},
+										"PrimaryKey": {
+											"value": "'@{item().DataSetPrimaryKey}'",
+											"type": "Expression"
+										},
+										"vContainerName": {
+											"value": "'@{concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)}'",
+											"type": "Expression"
+										},
+										"vPath": {
+											"value": "'@{concat(pipeline().globalParameters.vGlobalGold,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')}'",
+											"type": "Expression"
 										}
 									},
 									"datasetParameters": {
@@ -317,20 +329,6 @@
 											},
 											"vDataSet": {
 												"value": "@concat(replace(item().DataSetName,'.','_'),'_CURATED.csv')",
-												"type": "Expression"
-											}
-										},
-										"SnkEnrichedDataSets": {
-											"vEnv": {
-												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)\n",
-												"type": "Expression"
-											},
-											"vPath": {
-												"value": "@concat(pipeline().globalParameters.vGlobalGold,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
-												"type": "Expression"
-											},
-											"vDataSet": {
-												"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.parquet')\n",
 												"type": "Expression"
 											}
 										}
