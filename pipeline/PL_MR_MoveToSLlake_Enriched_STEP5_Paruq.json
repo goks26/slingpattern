@@ -131,7 +131,7 @@
 												"type": "Expression"
 											},
 											"vDataSet": {
-												"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')",
+												"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.parquet')",
 												"type": "Expression"
 											}
 										}
