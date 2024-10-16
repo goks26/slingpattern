@@ -1,0 +1,47 @@
+{
+	"name": "DS_SLIPLakeIngestion_LakeCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_sling_lake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"vEnv": {
+				"type": "string"
+			},
+			"vPath": {
+				"type": "string"
+			},
+			"vDataSet": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "DS_SLIngestionPattern"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().vDataSet",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().vPath",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().vEnv",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
