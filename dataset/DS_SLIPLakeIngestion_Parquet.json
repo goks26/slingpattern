@@ -5,6 +5,17 @@
 			"referenceName": "ls_sling_blob",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"vEnv": {
+				"type": "string"
+			},
+			"vPath": {
+				"type": "string"
+			},
+			"vDataSet": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "DS_SLIngestionPattern"
 		},
@@ -12,7 +23,19 @@
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation"
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().vDataSet",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().vPath",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().vEnv",
+					"type": "Expression"
+				}
 			},
 			"compressionCodec": "none"
 		},
