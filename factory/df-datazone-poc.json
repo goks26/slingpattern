@@ -1,0 +1,9 @@
+{
+	"name": "df-datazone-poc",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "71019f20-6674-4e8d-a672-2d4a9c41b586",
+		"tenantId": "6def893c-81ba-42d8-88bf-f731120986fb"
+	}
+}
