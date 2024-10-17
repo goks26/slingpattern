@@ -94,7 +94,7 @@
 											"type": "Expression"
 										},
 										"vSinkFile": {
-											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED.parquet')\n}'",
+											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED')\n}'",
 											"type": "Expression"
 										},
 										"vContainerName": {
@@ -118,6 +118,20 @@
 											},
 											"vDataSet": {
 												"value": "@concat(replace(item().DataSetName,'.','_'),'_CURATED.csv')",
+												"type": "Expression"
+											}
+										},
+										"ExistingDimensionTable": {
+											"vEnv": {
+												"value": "@concat(toLower(pipeline().globalParameters.vGlobalEnv),'-',pipeline().globalParameters.vGobalLakeName)",
+												"type": "Expression"
+											},
+											"vPath": {
+												"value": "@concat(pipeline().globalParameters.vGlobalGold,'/',item().DataSetSource,'/',variables('vYear'),variables('vQtr'),'/',variables('vMonth'),'/',variables('vDate'),'/',item().DataSetName,'/')",
+												"type": "Expression"
+											},
+											"vDataSet": {
+												"value": "@concat(replace(item().DataSetName,'.','_'),'_ENRICHED.parquet')",
 												"type": "Expression"
 											}
 										}
