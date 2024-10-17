@@ -301,7 +301,7 @@
 									"type": "DataFlowReference",
 									"parameters": {
 										"vSinkFile": {
-											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED')}'",
+											"value": "'@{concat(replace(item().DataSetName,'.','_'),'_ENRICHED.csv')}'",
 											"type": "Expression"
 										},
 										"PrimaryKey": {
