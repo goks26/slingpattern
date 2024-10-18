@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT DataSetSource, DataSetName,DataSetQuery \nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetTransformation = 'Y' AND DataSetPreviousRunStatus = 'RAW SUCCESS'",
+						"sqlReaderQuery": "SELECT DataSetSource, DataSetName,DataSetQuery,DataSetCondition \nFROM [MetaDataEngine].[DataSetProcessMasterTbl]\nWHERE DataSetActiveFlg = 'Y' AND DataSetReRun = 'N' AND DataSetTransformation = 'Y' AND DataSetPreviousRunStatus = 'RAW SUCCESS'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -80,7 +80,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "@concat(item().DataSetQuery,' FROM ',item().DataSetName)",
+										"value": "@concat(item().DataSetQuery,' FROM ',item().DataSetName,' WHERE ',item().DataSetCondition)",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
