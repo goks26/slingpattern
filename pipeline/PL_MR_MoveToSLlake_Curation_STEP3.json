@@ -80,7 +80,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "@concat(item().DataSetQuery,' FROM ',item().DataSetName,' WHERE ',item().DataSetCondition)",
+										"value": "@concat(item().DataSetQuery,' FROM ',item().DataSetName,' ',item().DataSetCondition)",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
